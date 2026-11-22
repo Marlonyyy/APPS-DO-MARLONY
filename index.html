@@ -20,34 +20,69 @@
             background-color: #0f172a;
             color: #ffffff;
             min-height: 155vh;
-            padding-bottom: 120px;
+            padding-bottom: 140px;
             overflow-x: hidden;
+            position: relative;
         }
 
         /* ===================================================
-           TÍTULO SUPERIOR DESTACADO COM COLORIDO CONTÍNUO
+           FADES FIXOS NO TOPO E NO RODAPÉ DA TELA
+           =================================================== */
+        /* Fade sutil no topo fixo */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 45px;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.95), transparent);
+            pointer-events: none;
+            z-index: 900;
+        }
+
+        /* Fade elegante no rodapé (parte de baixo da tela) */
+        body::after {
+            content: "";
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 40%, transparent 100%);
+            pointer-events: none;
+            z-index: 900;
+        }
+
+        /* ===================================================
+           TÍTULO SUPERIOR COM BRILHO LÍQUIDO SEM BORDAS SECAS
            =================================================== */
         .top-brand-bar {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 32px 20px 14px;
+            padding: 38px 20px 18px;
         }
 
+        /* Gradiente 100% suave sem corte seco retangular */
         .top-brand-bar::before {
             content: "";
             position: absolute;
-            width: min(460px, 88vw);
-            height: 76px;
-            border-radius: 9999px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(520px, 92vw);
+            height: 90px;
+            border-radius: 50%;
             background: radial-gradient(
-                circle,
-                rgba(99, 102, 241, 0.24) 0%,
-                rgba(16, 185, 129, 0.12) 55%,
-                transparent 78%
+                ellipse at center,
+                rgba(99, 102, 241, 0.28) 0%,
+                rgba(56, 189, 248, 0.14) 40%,
+                rgba(16, 185, 129, 0.05) 65%,
+                transparent 100%
             );
-            filter: blur(18px);
+            filter: blur(22px);
             pointer-events: none;
         }
 
@@ -55,13 +90,12 @@
             position: relative;
             z-index: 1;
             display: inline-block;
-            font-size: 2.25rem;
+            font-size: 2.35rem;
             font-weight: 900;
-            letter-spacing: 0.4px;
+            letter-spacing: 0.5px;
             text-align: center;
-            text-shadow: 0 10px 28px rgba(99, 102, 241, 0.28);
+            text-shadow: 0 8px 30px rgba(99, 102, 241, 0.35);
 
-            /* Começa e termina na mesma cor (#818cf8) para o ciclo ser contínuo */
             background: linear-gradient(
                 90deg,
                 #818cf8 0%,
@@ -97,11 +131,11 @@
         }
 
         /* ===================================================
-           BARRA EM PÍLULA LIQUID GLASS (INÍCIO, APPS E ATUALIZAÇÕES)
+           BARRA EM PÍLULA LIQUID GLASS
            =================================================== */
         .navbar-wrapper {
             position: fixed;
-            top: 98px;
+            top: 104px;
             left: 0;
             width: 100%;
             display: flex;
@@ -221,7 +255,7 @@
         }
 
         /* ===================================================
-           DESTAQUE PRINCIPAL COM APLICATIVO PRINCIPAL GRANDÃO
+           DESTAQUE DO APLICATIVO PRINCIPAL
            =================================================== */
         .hero {
             padding: 124px 20px 70px;
@@ -293,7 +327,7 @@
         }
 
         /* ===================================================
-           CONTAINER E APLICATIVOS MAIS PARA BAIXO
+           GRID DE JOGOS E APKS
            =================================================== */
         .container {
             max-width: 1200px;
@@ -365,7 +399,7 @@
         }
 
         /* ===================================================
-           BOTÃO MATERIAL 3 EXPRESSIVE (CÓDIGO ORIGINAL)
+           BOTÃO MATERIAL 3 EXPRESSIVE (SEM ALTERAÇÃO)
            =================================================== */
         .m3-elastic-btn {
             position: relative;
@@ -464,7 +498,7 @@
         }
 
         /* ===================================================
-           PAINEL LATERAL DE ATUALIZAÇÕES OFICIAIS (DO LADO)
+           PAINEL LATERAL DE ATUALIZAÇÕES (VINDO DO LADO)
            =================================================== */
         .drawer-backdrop {
             position: fixed;
@@ -579,7 +613,7 @@
         }
 
         /* ===================================================
-           ADAPTAÇÃO PARA CELULAR (RESPONSIVO)
+           ADAPTAÇÃO RESPONSIVA PARA CELULAR
            =================================================== */
         @media (max-width: 768px) {
             .featured-showcase {
@@ -613,19 +647,15 @@
             }
 
             .top-brand-bar {
-                padding: 22px 16px 10px;
-            }
-
-            .top-brand-bar::before {
-                height: 64px;
+                padding: 26px 16px 12px;
             }
 
             .brand-title {
-                font-size: 1.65rem;
+                font-size: 1.7rem;
             }
 
             .navbar-wrapper {
-                top: 82px;
+                top: 86px;
                 padding: 0 10px;
             }
 
@@ -691,7 +721,7 @@
 </head>
 <body id="inicio">
 
-    <!-- TÍTULO SUPERIOR DESTACADO COM COLORIDO CONTÍNUO -->
+    <!-- TÍTULO SUPERIOR DESTACADO COM BRILHO LÍQUIDO LISO -->
     <div class="top-brand-bar">
         <div class="brand-title" id="brandTitle">Aplicativos e Jogos</div>
     </div>
@@ -726,7 +756,7 @@
         </div>
     </section>
 
-    <!-- SEÇÃO DE APLICATIVOS E JOGOS (MAIS PARA BAIXO) -->
+    <!-- SEÇÃO DE APLICATIVOS E JOGOS -->
     <main class="container" id="apps">
         <h2 class="section-title">Meus Aplicativos e Jogos</h2>
         <div class="games-grid">
@@ -767,15 +797,7 @@
         </div>
     </main>
 
-    <!-- =====================================================================
-         PÁGINA LATERAL DE ATUALIZAÇÕES OFICIAIS
-         PARA ADICIONAR OU ALTERAR MELHORIAS: COPIE UM BLOCO <div class="changelog-item">
-         E MUDE:
-         1. NOME DO APLICATIVO (<span class="changelog-app">)
-         2. VERSÃO (<span class="changelog-ver">)
-         3. DATA (<span class="changelog-date">)
-         4. DESCRIÇÃO DA MELHORIA (<p class="changelog-notes">)
-         ===================================================================== -->
+    <!-- PÁGINA LATERAL DE ATUALIZAÇÕES OFICIAIS -->
     <div class="drawer-backdrop" id="drawerBackdrop"></div>
     <aside class="updates-drawer" id="updatesDrawer" aria-label="Atualizações dos aplicativos">
         <div class="drawer-header">
@@ -784,7 +806,7 @@
         </div>
 
         <div class="changelog-list" id="changelogList">
-            <!-- ATUALIZAÇÃO 1 (EDITE AQUI) -->
+            <!-- ATUALIZAÇÃO 1 (EDITE AQUI NO HTML) -->
             <div class="changelog-item">
                 <div class="changelog-top">
                     <span class="changelog-app">NOME DO APLICATIVO: Super App do Marlony</span>
@@ -794,7 +816,7 @@
                 <p class="changelog-notes">DESCRIÇÃO: Lançamento inicial do aplicativo principal com instalação direta via APK.</p>
             </div>
 
-            <!-- ATUALIZAÇÃO 2 (EDITE AQUI) -->
+            <!-- ATUALIZAÇÃO 2 (EDITE AQUI NO HTML) -->
             <div class="changelog-item">
                 <div class="changelog-top">
                     <span class="changelog-app">NOME DO APLICATIVO: Meu Jogo 1</span>
@@ -807,7 +829,7 @@
     </aside>
 
     <script>
-        // Alterna somente entre "Aplicativos e Jogos" e "Marlony"
+        // Alterna suavemente entre "Aplicativos e Jogos" e "Marlony"
         const brandTitle = document.getElementById('brandTitle');
         const titulosRotativos = [
             'Aplicativos e Jogos',
@@ -857,7 +879,7 @@
         window.addEventListener('scroll', atualizarBrilhoPorScroll, { passive: true });
         atualizarBrilhoPorScroll();
 
-        // Página lateral de Atualizações (desliza da direita)
+        // Página lateral de Atualizações
         const updatesDrawer = document.getElementById('updatesDrawer');
         const drawerBackdrop = document.getElementById('drawerBackdrop');
         const closeDrawerBtn = document.getElementById('closeDrawerBtn');
