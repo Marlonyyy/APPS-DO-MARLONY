@@ -1,40 +1,53 @@
-# 📱 Aplicativos e Jogos — Marlony 🎮
+# 📱 Aplicativos e Jogos — Marlony
 
-Bem-vindo ao repositório oficial do meu portal de **Aplicativos e Jogos**! 🚀  
-Aqui eu reúno e disponibilizo para download direto os meus próprios aplicativos, jogos e ferramentas em formato **APK** para Android, junto com novidades, versões e histórico de melhorias.
+> **Vitrine oficial e exclusiva dos meus aplicativos e jogos em `.apk` para Android.**  
+> Aqui **ninguém mais publica APKs** — todo o catálogo, versões, capas e histórico de mudanças pertencem aos meus próprios projetos.
 
----
-
-## ✨ O que este site faz?
-
-Este projeto funciona como uma **vitrine própria e centralizada** para divulgar e distribuir meus apps sem depender de intermediários complicados:
-
-* 🌟 **Destaque do Aplicativo Principal:** espaço amplo no topo para apresentar o app principal do momento, sua versão atual e o botão de download rápido.
-* 🕹️ **Catálogo de Apps e Jogos:** grade organizada com capa, nome, versão, descrição e download direto de cada `.apk`.
-* 💎 **Barra de Navegação *Liquid Glass*:** menu flutuante com efeito de vidro, brilho dinâmico e rolagem suave para **Início**, **Apps** e **Atualizações**.
-* 📋 **Painel Lateral de Atualizações:** gaveta deslizante com o registro das versões, datas e melhorias lançadas em cada aplicativo.
-* ⚡ **Botões Elásticos Expressivos:** animações interativas de clique e feedback visual ao iniciar o download.
-* 📲 **Responsivo para Celular e Computador:** layout adaptado para telas grandes e smartphones.
+![Status do Projeto](https://img.shields.io/badge/Status-Ativo-10b981?style=for-the-badge)
+![Plataforma](https://img.shields.io/badge/Plataforma-Android%20(.APK)-6366f1?style=for-the-badge)
+![Publicação](https://img.shields.io/badge/Publica%C3%A7%C3%A3o-Exclusiva%20do%20Autor-ec4899?style=for-the-badge)
 
 ---
 
-## 🛠️ Como editar e publicar seus APKs
+## ✨ O que é este site?
 
-1. Coloque as imagens de capa/ícones e os arquivos `.apk` no repositório (ou atualize os links `src` e `href` no `index.html`).
-2. Edite o **Aplicativo Principal** na seção `.hero` (nome, versão, descrição, imagem e arquivo `.apk`).
-3. Adicione ou personalize os **Cards** dentro de `<main id="apps">` para cada novo jogo ou ferramenta.
-4. Registre as novidades no painel lateral (`#updatesDrawer`) sempre que lançar uma versão nova.
-5. Ative o **GitHub Pages** nas configurações do repositório para colocar o site no ar! 🌐
+Este projeto é o **meu espaço próprio de distribuição direta** para baixar meus aplicativos e jogos no celular sem depender de intermediários. A ideia do site é reunir em um só lugar:
+
+- 🚀 **Aplicativo Principal em Destaque:** Um card grande no topo com versão atual, descrição e botão direto de download `.apk`.
+- 🎮 **Catálogo de Apps e Jogos:** Grade responsiva para organizar jogos, utilitários e novas criações com capa, versão e botão de baixar.
+- 📰 **Painel Lateral de Atualizações:** Gaveta deslizante (`Atualizações`) para registrar novidades, correções e datas de cada versão lançada.
+- 🧊 **Visual Moderno:** Fundo escuro (`#0f172a`), título animado alternando entre *Aplicativos e Jogos* e *Marlony*, barra de navegação *Liquid Glass* e botões elásticos interativos.
 
 ---
 
-## ⚠️ Aviso sobre instalação de APK
+## 🎯 Regras do Espaço
 
-Como os arquivos são distribuídos diretamente em formato `.apk`, ao instalar no Android o sistema pode pedir permissão para instalar aplicativos de fontes conhecidas ou do navegador/gerenciador de arquivos utilizado.
+- 🔒 **Autoria exclusiva:** Somente eu publico e atualizo os arquivos `.apk` listados neste site.
+- 📦 **Controle de versão:** Cada lançamento recebe número de versão (`ex.: v1.0.0`, `v1.2.0`) e registro no painel de atualizações.
+- 📱 **Feito para celular e computador:** Layout adaptado para telas pequenas e grandes.
+
+---
+
+## 🛠️ Como editar e publicar novos APKs
+
+1. Coloque o arquivo `.apk` e a imagem de capa (`.jpg` / `.png`) no repositório (ou em uma pasta organizada).
+2. Abra o arquivo `index.html` e atualize:
+   - Nome do app ou jogo
+   - Número da versão
+   - Descrição curta
+   - Link de download (`href="nome-do-arquivo.apk"`)
+3. Adicione um novo item na lista de **Atualizações dos Aplicativos** para avisar o que mudou.
+4. Envie as alterações para o GitHub e ative o **GitHub Pages** nas configurações do repositório para deixar o site no ar.
+
+---
+
+## ⚠️ Aviso de Instalação no Android
+
+Como a instalação é feita diretamente via arquivo `.apk` fora da loja padrão, o Android pode pedir permissão para instalar aplicativos de fontes conhecidas/navegador. Baixe sempre apenas os arquivos oficiais publicados aqui.
 
 ---
 
 ## 🤖 Créditos
 
-* **Autor / Criador:** Marlony
-* **Apoio na criação e estruturação:** Gerado e aprimorado com o **Gemini** ✨
+- **Autor e Criador dos Apps:** Marlony
+- **Auxílio na criação e estruturação com IA:** Desenvolvido com apoio do **Gemini** ✨
