@@ -710,7 +710,7 @@
         }
 
         /* ===================================================
-           PAINEL LATERAL DE ATUALIZAÇÕES
+           PAINEL LATERAL DE ATUALIZAÇÕES (DESKTOP)
            =================================================== */
         .drawer-backdrop {
             position: fixed;
@@ -884,6 +884,29 @@
                 max-width: 420px;
             }
 
+            /* Gaveta de atualizações subindo de baixo para cima apenas no celular */
+            .updates-drawer {
+                top: auto;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                max-width: 100%;
+                height: 76vh;
+                max-height: 82vh;
+                border-left: none;
+                border-top: 1px solid rgba(255, 255, 255, 0.18);
+                border-radius: 28px 28px 0 0;
+                box-shadow: 0 -18px 48px rgba(0, 0, 0, 0.78);
+                padding: 22px 20px 104px;
+                transform: translateY(100%);
+                transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            .updates-drawer.open {
+                transform: translateY(0);
+            }
+
             /* Barra inferior grossa com ícones soltos + pílula de vidro única deslizante */
             .liquid-glass-pill {
                 width: 100%;
@@ -1052,6 +1075,7 @@
     <!-- TÍTULO SUPERIOR COM ESTRELAS DE 4 PONTAS ATRÁS -->
     <div class="top-brand-bar">
         <div class="stars-container" id="starsContainer"></div>
+        <!-- ALTERE AQUI O NOME FIXO PRINCIPAL DO SITE -->
         <div class="brand-title" id="brandTitle">Aplicativos e Jogos</div>
     </div>
 
@@ -1083,7 +1107,7 @@
                 </button>
             </nav>
 
-            <!-- COLOQUE O LINK DO SEU GITHUB ABAIXO -->
+            <!-- ALTERE AQUI O LINK DO SEU GITHUB -->
             <a
                 href="https://github.com/seu-usuario/seu-repositorio"
                 target="_blank"
@@ -1098,7 +1122,7 @@
                 </svg>
             </a>
 
-            <!-- COLOQUE O LINK DO SEU CANAL DO YOUTUBE ABAIXO -->
+            <!-- ALTERE AQUI O LINK DO SEU CANAL DO YOUTUBE -->
             <a
                 href="https://www.youtube.com/@seu-canal"
                 target="_blank"
@@ -1118,6 +1142,7 @@
     <!-- DESTAQUE DO APLICATIVO PRINCIPAL -->
     <section class="hero">
         <div class="featured-showcase">
+            <!-- ALTERE AQUI A IMAGEM E O NOME/VERSÃO/DESCRIÇÃO/APK DO APP PRINCIPAL -->
             <img src="https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/app-principal.jpg" alt="Foto do Aplicativo Principal" class="featured-cover" onerror="this.src='https://via.placeholder.com/600x340/334155/ffffff?text=Foto+do+Aplicativo+Principal'">
             <div class="featured-info">
                 <span class="featured-badge">Aplicativo Principal</span>
@@ -1136,7 +1161,7 @@
         <h2 class="section-title">Meus Aplicativos e Jogos</h2>
         <div class="games-grid">
 
-            <!-- CARD 1 -->
+            <!-- CARD 1: ALTERE IMAGEM, NOME, VERSÃO, DESCRIÇÃO E ARQUIVO .APK -->
             <div class="game-card">
                 <img src="https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/imagem-jogo1.jpg" alt="Foto do Jogo 1" class="game-thumb" onerror="this.src='https://via.placeholder.com/400x200/334155/ffffff?text=Sua+Foto+Aqui'">
                 <h3>Meu Jogo 1</h3>
@@ -1147,7 +1172,7 @@
                 </a>
             </div>
 
-            <!-- CARD 2 -->
+            <!-- CARD 2: ALTERE IMAGEM, NOME, VERSÃO, DESCRIÇÃO E ARQUIVO .APK -->
             <div class="game-card">
                 <img src="https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/imagem-jogo2.jpg" alt="Foto do Jogo 2" class="game-thumb" onerror="this.src='https://via.placeholder.com/400x200/334155/ffffff?text=Sua+Foto+Aqui'">
                 <h3>Meu Jogo 2</h3>
@@ -1158,7 +1183,7 @@
                 </a>
             </div>
 
-            <!-- CARD 3 -->
+            <!-- CARD 3: ALTERE IMAGEM, NOME, VERSÃO, DESCRIÇÃO E ARQUIVO .APK -->
             <div class="game-card">
                 <img src="https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/imagem-app1.jpg" alt="Foto do App 3" class="game-thumb" onerror="this.src='https://via.placeholder.com/400x200/334155/ffffff?text=Sua+Foto+Aqui'">
                 <h3>Meu App Útil</h3>
@@ -1172,7 +1197,7 @@
         </div>
     </main>
 
-    <!-- PÁGINA LATERAL DE ATUALIZAÇÕES OFICIAIS -->
+    <!-- PAINEL / GAVETA DE ATUALIZAÇÕES OFICIAIS -->
     <div class="drawer-backdrop" id="drawerBackdrop"></div>
     <aside class="updates-drawer" id="updatesDrawer" aria-label="Atualizações dos aplicativos">
         <div class="drawer-header">
@@ -1181,7 +1206,7 @@
         </div>
 
         <div class="changelog-list" id="changelogList">
-            <!-- ATUALIZAÇÃO 1 (EDITE AQUI NO HTML) -->
+            <!-- ATUALIZAÇÃO 1: ALTERE NOME DO APP, VERSÃO, DATA E NOTAS -->
             <div class="changelog-item">
                 <div class="changelog-top">
                     <span class="changelog-app">Super App do Marlony</span>
@@ -1191,7 +1216,7 @@
                 <p class="changelog-notes">Lançamento inicial do aplicativo principal com instalação direta via APK.</p>
             </div>
 
-            <!-- ATUALIZAÇÃO 2 (EDITE AQUI NO HTML) -->
+            <!-- ATUALIZAÇÃO 2: ALTERE NOME DO APP, VERSÃO, DATA E NOTAS -->
             <div class="changelog-item">
                 <div class="changelog-top">
                     <span class="changelog-app">Meu Jogo 1</span>
@@ -1228,7 +1253,7 @@
             starsContainer.appendChild(svg);
         }
 
-        // 2. ALTERNÂNCIA SUAVE ENTRE "Aplicativos e Jogos" E "Marlony"
+        // 2. ALTERNÂNCIA SUAVE DOS TÍTULOS — ALTERE AQUI OS TEXTOS QUE ALTERNAM NO TOPO
         const brandTitle = document.getElementById('brandTitle');
         const titulosRotativos = [
             'Aplicativos e Jogos',
@@ -1246,7 +1271,7 @@
             }, 400);
         }, 4000);
 
-        // 3. LUZ SUAVE SEM CORTE SECO + PÍLULA ESTÁVEL E RÁPIDA NA CASINHA (ANDROID)
+        // 3. LUZ SUAVE SEM CORTE SECO + PÍLULA RÁPIDA NA CASINHA (ANDROID)
         const navbarWrapper = document.getElementById('navbarWrapper');
         const pill = document.getElementById('liquidGlassPill');
         const androidThumb = document.getElementById('androidGlassThumb');
@@ -1411,7 +1436,7 @@
         atualizarScrollNavbar();
         resetarInatividade();
 
-        // Loop rápido e estável sem oscilações longas ao voltar para a casinha
+        // Velocidade rápida e igual em todos os botões (incluindo voltar para a casinha)
         function loopAnimacaoUnificado() {
             if (estaInativo) {
                 idleFase += 0.018;
@@ -1439,24 +1464,24 @@
             if (isAndroidMobile()) {
                 const dist = thumbTargetX - thumbX;
 
-                if (!arrasteAtivo && Math.abs(dist) < 0.4 && Math.abs(thumbVelX) < 0.2) {
+                if (!arrasteAtivo && Math.abs(dist) < 0.5 && Math.abs(thumbVelX) < 0.25) {
                     thumbX = thumbTargetX;
                     thumbVelX = 0;
                 } else {
-                    const stiffness = arrasteAtivo ? 0.65 : 0.42;
-                    const damping = arrasteAtivo ? 0.65 : 0.68;
+                    const stiffness = arrasteAtivo ? 0.72 : 0.52;
+                    const damping = arrasteAtivo ? 0.62 : 0.64;
 
                     const forceX = dist * stiffness;
-                    thumbVelX = Math.max(-38, Math.min(38, (thumbVelX + forceX) * damping));
+                    thumbVelX = Math.max(-48, Math.min(48, (thumbVelX + forceX) * damping));
                     thumbX += thumbVelX;
                 }
 
-                const stretch = Math.min(0.035, Math.abs(thumbVelX) * 0.0022);
+                const stretch = Math.min(0.03, Math.abs(thumbVelX) * 0.0018);
                 const targetScaleX = arrasteAtivo ? 1.02 : (1 + stretch);
                 const targetScaleY = arrasteAtivo ? 0.99 : (1 - stretch * 0.5);
 
-                thumbScaleX += (targetScaleX - thumbScaleX) * 0.35;
-                thumbScaleY += (targetScaleY - thumbScaleY) * 0.35;
+                thumbScaleX += (targetScaleX - thumbScaleX) * 0.4;
+                thumbScaleY += (targetScaleY - thumbScaleY) * 0.4;
 
                 androidThumb.style.transform = `translate3d(${thumbX.toFixed(1)}px, 0, 0) scale(${thumbScaleX.toFixed(3)}, ${thumbScaleY.toFixed(3)})`;
             }
@@ -1527,24 +1552,25 @@
             marcarEstadoAtivo(2);
         }
 
-        function fecharAtualizacoes() {
+        function fecharAtualizacoes(sincronizarScroll = false) {
             updatesDrawer.classList.remove('open');
             drawerBackdrop.classList.remove('open');
             btnAtualizacoes.classList.remove('is-current');
-            if (isAndroidMobile()) {
+            if (sincronizarScroll && isAndroidMobile()) {
                 sincronizarPorRolagem();
             }
         }
 
         function executarAcaoBotao(idx) {
-            bloqueioScrollSyncAte = Date.now() + 350;
-            marcarEstadoAtivo(idx);
+            bloqueioScrollSyncAte = Date.now() + 450;
 
             if (idx === 0) {
-                fecharAtualizacoes();
+                fecharAtualizacoes(false);
+                marcarEstadoAtivo(0);
                 window.scrollTo(0, 0);
             } else if (idx === 1) {
-                fecharAtualizacoes();
+                fecharAtualizacoes(false);
+                marcarEstadoAtivo(1);
                 const topoApps = appsSection.getBoundingClientRect().top + window.scrollY - 95;
                 window.scrollTo(0, topoApps);
             } else if (idx === 2) {
@@ -1555,8 +1581,8 @@
         btnInicio.addEventListener('click', () => executarAcaoBotao(0));
         btnApps.addEventListener('click', () => executarAcaoBotao(1));
         btnAtualizacoes.addEventListener('click', () => executarAcaoBotao(2));
-        closeDrawerBtn.addEventListener('click', fecharAtualizacoes);
-        drawerBackdrop.addEventListener('click', fecharAtualizacoes);
+        closeDrawerBtn.addEventListener('click', () => fecharAtualizacoes(true));
+        drawerBackdrop.addEventListener('click', () => fecharAtualizacoes(true));
 
         window.addEventListener('resize', () => {
             sincronizarThumbComIndice(true);
