@@ -53,17 +53,39 @@
         }
 
         /* ===================================================
-           TÍTULO SUPERIOR COM ESTRELAS DE 4 PONTAS NO FUNDO
+           TÍTULO SUPERIOR FUSÃO 100% SUAVE (SEM LINHAS RETAS)
            =================================================== */
         .top-brand-bar {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 40px 20px 20px;
+            padding: 46px 20px 24px;
+            background: transparent;
         }
 
-        /* Campo de estrelas de 4 pontas apenas atrás do título */
+        /* Névoa de brilho radial completamente orgânica sem bordas ou linhas */
+        .top-brand-bar::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(560px, 95vw);
+            height: 110px;
+            border-radius: 50%;
+            background: radial-gradient(
+                ellipse at center,
+                rgba(99, 102, 241, 0.22) 0%,
+                rgba(56, 189, 248, 0.12) 40%,
+                rgba(16, 185, 129, 0.04) 68%,
+                transparent 100%
+            );
+            filter: blur(28px);
+            pointer-events: none;
+        }
+
+        /* Campo de estrelas de 4 pontas */
         .stars-container {
             position: absolute;
             top: 50%;
@@ -103,7 +125,7 @@
             font-weight: 900;
             letter-spacing: 0.5px;
             text-align: center;
-            text-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            text-shadow: 0 4px 22px rgba(99, 102, 241, 0.45);
 
             background: linear-gradient(
                 90deg,
@@ -140,7 +162,7 @@
         }
 
         /* ===================================================
-           BARRA EM PÍLULA LIQUID GLASS (PULSA EM LOOP NA INATIVIDADE)
+           BARRA EM PÍLULA LIQUID GLASS (PULSO LENTO E CADENCIADO)
            =================================================== */
         .navbar-wrapper {
             position: fixed;
@@ -192,13 +214,12 @@
                 inset 0 -2px 5px rgba(0, 0, 0, 0.45);
 
             transition:
-                width 480ms cubic-bezier(0.34, 1.45, 0.64, 1),
-                padding 480ms cubic-bezier(0.34, 1.45, 0.64, 1),
-                gap 480ms cubic-bezier(0.34, 1.45, 0.64, 1),
-                box-shadow 350ms ease;
+                width 650ms cubic-bezier(0.34, 1.2, 0.64, 1),
+                padding 650ms cubic-bezier(0.34, 1.2, 0.64, 1),
+                gap 650ms cubic-bezier(0.34, 1.2, 0.64, 1),
+                box-shadow 450ms ease;
         }
 
-        /* Expansão ao passar o mouse */
         .liquid-glass-pill:hover {
             width: 510px;
             padding: 12px 24px;
@@ -210,12 +231,12 @@
                 inset 0 -2px 6px rgba(0, 0, 0, 0.45);
         }
 
-        /* Animação contínua de aumentar e diminuir quando fica inativo */
+        /* ANIMAÇÃO DE PULSO DESACELERADA E RESPIRADA (5.5 SEGUNDOS) */
         .liquid-glass-pill.idle-pulse {
-            animation: pulsar-inativo 2.6s cubic-bezier(0.34, 1.35, 0.64, 1) infinite;
+            animation: pulsar-inativo-suave 5500ms cubic-bezier(0.4, 0, 0.2, 1) infinite;
         }
 
-        @keyframes pulsar-inativo {
+        @keyframes pulsar-inativo-suave {
             0%, 100% {
                 width: 440px;
                 padding: 10px 18px;
@@ -227,13 +248,13 @@
                     inset 0 -2px 5px rgba(0, 0, 0, 0.45);
             }
             50% {
-                width: 510px;
-                padding: 12px 24px;
-                gap: 16px;
+                width: 495px;
+                padding: 11px 22px;
+                gap: 14px;
                 box-shadow:
-                    0 24px 48px -10px rgba(0, 0, 0, 0.72),
-                    0 10px 26px -4px rgba(99, 102, 241, 0.42),
-                    inset 0 2px 4px rgba(255, 255, 255, 0.8),
+                    0 22px 44px -10px rgba(0, 0, 0, 0.7),
+                    0 8px 24px -4px rgba(99, 102, 241, 0.38),
+                    inset 0 2px 4px rgba(255, 255, 255, 0.75),
                     inset 0 -2px 6px rgba(0, 0, 0, 0.45);
             }
         }
@@ -703,7 +724,7 @@
             }
 
             .top-brand-bar {
-                padding: 26px 16px 12px;
+                padding: 30px 16px 14px;
             }
 
             .brand-title {
@@ -733,7 +754,7 @@
                 gap: 8px;
             }
 
-            @keyframes pulsar-inativo {
+            @keyframes pulsar-inativo-suave {
                 0%, 100% {
                     width: 96vw;
                     max-width: 390px;
@@ -792,13 +813,13 @@
 </head>
 <body id="inicio">
 
-    <!-- TÍTULO SUPERIOR COM ESTRELAS DE 4 PONTAS ATRÁS -->
+    <!-- TÍTULO SUPERIOR FUSÃO 100% SUAVE (SEM LINHAS RETAS) -->
     <div class="top-brand-bar">
         <div class="stars-container" id="starsContainer"></div>
         <div class="brand-title" id="brandTitle">Aplicativos e Jogos</div>
     </div>
 
-    <!-- PÍLULA LIQUID GLASS (PULSA AUMENTANDO E DIMINUINDO EM LOOP NA INATIVIDADE) -->
+    <!-- PÍLULA LIQUID GLASS (PULSO CADENCIADO EM LOOP DE 5.5s NA INATIVIDADE) -->
     <div class="navbar-wrapper" id="navbarWrapper">
         <nav class="liquid-glass-pill" id="liquidGlassPill" aria-label="Navegação principal">
             <button type="button" class="pill-nav-btn is-current" id="btnInicio">Início</button>
@@ -938,7 +959,7 @@
             }, 400);
         }, 4000);
 
-        // 3. PÍLULA LIQUID GLASS + ANIMAÇÃO PULSANTE EM LOOP APÓS 5S DE INATIVIDADE
+        // 3. PÍLULA LIQUID GLASS + ANIMAÇÃO PULSANTE EM LOOP SUAVE NA INATIVIDADE
         const navbarWrapper = document.getElementById('navbarWrapper');
         const pill = document.getElementById('liquidGlassPill');
         const btnInicio = document.getElementById('btnInicio');
@@ -976,12 +997,12 @@
 
             if (!brilhoInativoTimer) {
                 brilhoInativoTimer = setInterval(() => {
-                    glowAngulo += 0.05;
+                    glowAngulo += 0.02;
                     const x = 50 + Math.cos(glowAngulo) * 35;
                     const y = 50 + Math.sin(glowAngulo) * 30;
                     pill.style.setProperty('--glow-x', `${x}%`);
                     pill.style.setProperty('--glow-y', `${y}%`);
-                }, 30);
+                }, 40);
             }
         }
 
