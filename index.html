@@ -853,6 +853,10 @@
         }
 
         @media (max-width: 640px) {
+            html {
+                scroll-behavior: auto;
+            }
+
             body {
                 min-height: 145vh;
                 padding-bottom: 130px;
@@ -1242,7 +1246,7 @@
             }, 400);
         }, 4000);
 
-        // 3. LUZ SUAVE SEM CORTE SECO + PÍLULA CENTRALIZADA, RÁPIDA E AUTOMÁTICA NO SCROLL (ANDROID)
+        // 3. LUZ SUAVE SEM CORTE SECO + PÍLULA ESTÁVEL E RÁPIDA NA CASINHA (ANDROID)
         const navbarWrapper = document.getElementById('navbarWrapper');
         const pill = document.getElementById('liquidGlassPill');
         const androidThumb = document.getElementById('androidGlassThumb');
@@ -1263,8 +1267,7 @@
 
         let tempoInativoTimer = null;
         let estaInativo = false;
-        let navegandoPorClique = false;
-        let navegandoTimer = null;
+        let bloqueioScrollSyncAte = 0;
 
         let atualGlowX = 50;
         let atualGlowY = 50;
@@ -1317,6 +1320,8 @@
             if (imediato) {
                 thumbX = thumbTargetX;
                 thumbVelX = 0;
+                thumbScaleX = 1;
+                thumbScaleY = 1;
             }
         }
 
@@ -1327,7 +1332,8 @@
         }
 
         function sincronizarPorRolagem() {
-            if (!isAndroidMobile() || navegandoPorClique || arrasteAtivo) return;
+            if (!isAndroidMobile() || arrasteAtivo) return;
+            if (Date.now() < bloqueioScrollSyncAte) return;
             if (updatesDrawer.classList.contains('open')) return;
 
             const topoApps = appsSection.getBoundingClientRect().top;
@@ -1405,7 +1411,7 @@
         atualizarScrollNavbar();
         resetarInatividade();
 
-        // Loop leve e rápido da pílula e do brilho
+        // Loop rápido e estável sem oscilações longas ao voltar para a casinha
         function loopAnimacaoUnificado() {
             if (estaInativo) {
                 idleFase += 0.018;
@@ -1431,20 +1437,26 @@
             });
 
             if (isAndroidMobile()) {
-                // Mola rápida e leve para respostas ágeis entre todos os ícones
-                const stiffness = arrasteAtivo ? 0.65 : 0.36;
-                const damping = arrasteAtivo ? 0.65 : 0.72;
+                const dist = thumbTargetX - thumbX;
 
-                const forceX = (thumbTargetX - thumbX) * stiffness;
-                thumbVelX = (thumbVelX + forceX) * damping;
-                thumbX += thumbVelX;
+                if (!arrasteAtivo && Math.abs(dist) < 0.4 && Math.abs(thumbVelX) < 0.2) {
+                    thumbX = thumbTargetX;
+                    thumbVelX = 0;
+                } else {
+                    const stiffness = arrasteAtivo ? 0.65 : 0.42;
+                    const damping = arrasteAtivo ? 0.65 : 0.68;
 
-                const stretch = Math.min(0.045, Math.abs(thumbVelX) * 0.003);
-                const targetScaleX = arrasteAtivo ? 1.03 : (1 + stretch);
-                const targetScaleY = arrasteAtivo ? 0.98 : (1 - stretch * 0.5);
+                    const forceX = dist * stiffness;
+                    thumbVelX = Math.max(-38, Math.min(38, (thumbVelX + forceX) * damping));
+                    thumbX += thumbVelX;
+                }
 
-                thumbScaleX += (targetScaleX - thumbScaleX) * 0.3;
-                thumbScaleY += (targetScaleY - thumbScaleY) * 0.3;
+                const stretch = Math.min(0.035, Math.abs(thumbVelX) * 0.0022);
+                const targetScaleX = arrasteAtivo ? 1.02 : (1 + stretch);
+                const targetScaleY = arrasteAtivo ? 0.99 : (1 - stretch * 0.5);
+
+                thumbScaleX += (targetScaleX - thumbScaleX) * 0.35;
+                thumbScaleY += (targetScaleY - thumbScaleY) * 0.35;
 
                 androidThumb.style.transform = `translate3d(${thumbX.toFixed(1)}px, 0, 0) scale(${thumbScaleX.toFixed(3)}, ${thumbScaleY.toFixed(3)})`;
             }
@@ -1525,21 +1537,16 @@
         }
 
         function executarAcaoBotao(idx) {
-            navegandoPorClique = true;
-            clearTimeout(navegandoTimer);
-            navegandoTimer = setTimeout(() => {
-                navegandoPorClique = false;
-            }, 850);
-
+            bloqueioScrollSyncAte = Date.now() + 350;
             marcarEstadoAtivo(idx);
 
             if (idx === 0) {
                 fecharAtualizacoes();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo(0, 0);
             } else if (idx === 1) {
                 fecharAtualizacoes();
                 const topoApps = appsSection.getBoundingClientRect().top + window.scrollY - 95;
-                window.scrollTo({ top: topoApps, behavior: 'smooth' });
+                window.scrollTo(0, topoApps);
             } else if (idx === 2) {
                 abrirAtualizacoes();
             }
