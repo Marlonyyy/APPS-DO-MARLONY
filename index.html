@@ -28,7 +28,6 @@
         /* ===================================================
            FADES FIXOS NO TOPO E NO RODAPÉ DA TELA
            =================================================== */
-        /* Fade sutil no topo fixo */
         body::before {
             content: "";
             position: fixed;
@@ -41,7 +40,6 @@
             z-index: 900;
         }
 
-        /* Fade elegante no rodapé (parte de baixo da tela) */
         body::after {
             content: "";
             position: fixed;
@@ -55,46 +53,56 @@
         }
 
         /* ===================================================
-           TÍTULO SUPERIOR COM BRILHO LÍQUIDO SEM BORDAS SECAS
+           TÍTULO SUPERIOR COM ESTRELAS CINTILANTES NO FUNDO
            =================================================== */
         .top-brand-bar {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 38px 20px 18px;
+            padding: 40px 20px 20px;
         }
 
-        /* Gradiente 100% suave sem corte seco retangular */
-        .top-brand-bar::before {
-            content: "";
+        /* Campo de Estrelas Cintilantes apenas atrás do título */
+        .stars-container {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: min(520px, 92vw);
-            height: 90px;
-            border-radius: 50%;
-            background: radial-gradient(
-                ellipse at center,
-                rgba(99, 102, 241, 0.28) 0%,
-                rgba(56, 189, 248, 0.14) 40%,
-                rgba(16, 185, 129, 0.05) 65%,
-                transparent 100%
-            );
-            filter: blur(22px);
+            width: min(500px, 92vw);
+            height: 80px;
             pointer-events: none;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.8), 0 0 12px 4px rgba(129, 140, 248, 0.6);
+            animation: cintilar var(--duracao) ease-in-out infinite alternate;
+        }
+
+        @keyframes cintilar {
+            0% {
+                opacity: 0.15;
+                transform: scale(0.6);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.4);
+            }
         }
 
         .brand-title {
             position: relative;
             z-index: 1;
             display: inline-block;
-            font-size: 2.35rem;
+            font-size: 2.4rem;
             font-weight: 900;
             letter-spacing: 0.5px;
             text-align: center;
-            text-shadow: 0 8px 30px rgba(99, 102, 241, 0.35);
+            text-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
 
             background: linear-gradient(
                 90deg,
@@ -131,7 +139,7 @@
         }
 
         /* ===================================================
-           BARRA EM PÍLULA LIQUID GLASS
+           BARRA EM PÍLULA LIQUID GLASS (COM ANIMAÇÃO DE INATIVIDADE)
            =================================================== */
         .navbar-wrapper {
             position: fixed;
@@ -189,7 +197,9 @@
                 box-shadow 350ms ease;
         }
 
-        .liquid-glass-pill:hover {
+        /* Expansão por HOVER ou por INATIVIDADE */
+        .liquid-glass-pill:hover,
+        .liquid-glass-pill.idle-expand {
             width: 510px;
             padding: 12px 24px;
             gap: 16px;
@@ -252,6 +262,25 @@
             border-color: rgba(165, 180, 252, 0.55);
             color: #ffffff;
             box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.35);
+        }
+
+        /* BOTÃO DE ATUALIZAÇÕES VERDE NA PÍLULA */
+        .pill-nav-btn.btn-green {
+            background: rgba(16, 185, 129, 0.18);
+            border-color: rgba(52, 211, 153, 0.45);
+            color: #a7f3d0;
+        }
+
+        .pill-nav-btn.btn-green:hover {
+            background: rgba(16, 185, 129, 0.3);
+            color: #ffffff;
+        }
+
+        .pill-nav-btn.btn-green.is-current {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-color: rgba(110, 231, 183, 0.6);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
         }
 
         /* ===================================================
@@ -399,7 +428,7 @@
         }
 
         /* ===================================================
-           BOTÃO MATERIAL 3 EXPRESSIVE (SEM ALTERAÇÃO)
+           BOTÃO MATERIAL 3 EXPRESSIVE (CÓDIGO ORIGINAL)
            =================================================== */
         .m3-elastic-btn {
             position: relative;
@@ -498,7 +527,7 @@
         }
 
         /* ===================================================
-           PAINEL LATERAL DE ATUALIZAÇÕES (VINDO DO LADO)
+           PAINEL LATERAL DE ATUALIZAÇÕES
            =================================================== */
         .drawer-backdrop {
             position: fixed;
@@ -548,7 +577,7 @@
 
         .drawer-header h2 {
             font-size: 1.35rem;
-            color: #ffffff;
+            color: #10b981;
         }
 
         .close-drawer-btn {
@@ -571,7 +600,7 @@
 
         .changelog-item {
             background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.2);
             border-radius: 18px;
             padding: 16px;
         }
@@ -593,8 +622,8 @@
         .changelog-ver {
             font-size: 0.8rem;
             font-weight: 700;
-            color: #6ee7b7;
-            background: rgba(16, 185, 129, 0.15);
+            color: #ffffff;
+            background: linear-gradient(135deg, #10b981, #059669);
             padding: 3px 10px;
             border-radius: 9999px;
         }
@@ -670,7 +699,8 @@
                 gap: 6px;
             }
 
-            .liquid-glass-pill:hover {
+            .liquid-glass-pill:hover,
+            .liquid-glass-pill.idle-expand {
                 width: 98vw;
                 max-width: 410px;
                 padding: 9px 12px;
@@ -721,34 +751,31 @@
 </head>
 <body id="inicio">
 
-    <!-- TÍTULO SUPERIOR DESTACADO COM BRILHO LÍQUIDO LISO -->
+    <!-- TÍTULO SUPERIOR COM ESTRELAS CINTILANTES ATRÁS -->
     <div class="top-brand-bar">
+        <div class="stars-container" id="starsContainer"></div>
         <div class="brand-title" id="brandTitle">Aplicativos e Jogos</div>
     </div>
 
-    <!-- PÍLULA LIQUID GLASS COM INÍCIO, APPS E ATUALIZAÇÕES -->
+    <!-- PÍLULA LIQUID GLASS (COM ANIMAÇÃO AUTOMÁTICA EM 5S DE INATIVIDADE) -->
     <div class="navbar-wrapper" id="navbarWrapper">
         <nav class="liquid-glass-pill" id="liquidGlassPill" aria-label="Navegação principal">
             <button type="button" class="pill-nav-btn is-current" id="btnInicio">Início</button>
             <button type="button" class="pill-nav-btn" id="btnApps">Apps</button>
-            <button type="button" class="pill-nav-btn" id="btnAtualizacoes">Atualizações</button>
+            <!-- BOTÃO DE ATUALIZAÇÕES EM VERDE -->
+            <button type="button" class="pill-nav-btn btn-green" id="btnAtualizacoes">Atualizações</button>
         </nav>
     </div>
 
-    <!-- DESTAQUE DO APLICATIVO PRINCIPAL (BEM GRANDÃO) -->
+    <!-- DESTAQUE DO APLICATIVO PRINCIPAL -->
     <section class="hero">
         <div class="featured-showcase">
-            <!-- EDITE AQUI: Foto do aplicativo principal -->
             <img src="https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/app-principal.jpg" alt="Foto do Aplicativo Principal" class="featured-cover" onerror="this.src='https://via.placeholder.com/600x340/334155/ffffff?text=Foto+do+Aplicativo+Principal'">
             <div class="featured-info">
                 <span class="featured-badge">Aplicativo Principal</span>
-                <!-- EDITE AQUI: Nome do aplicativo principal -->
                 <h1 id="mainAppName">Super App do Marlony</h1>
-                <!-- EDITE AQUI: Versão do aplicativo principal -->
                 <div class="version-pill" id="mainAppVersion">Versão 1.0.0</div>
-                <!-- EDITE AQUI: Descrição do aplicativo principal -->
                 <p id="mainAppDesc">Aplicativo principal em destaque para instalar direto no celular com todas as novidades e melhorias recentes.</p>
-                <!-- EDITE AQUI: Nome do arquivo APK principal -->
                 <a href="aplicativo-principal.apk" download class="m3-elastic-btn" data-auto-reset="true" data-text-default="Baixar APK ⚡" data-text-success="Baixando... 📥">
                     <span class="btn-text">Baixar APK ⚡</span>
                 </a>
@@ -761,7 +788,7 @@
         <h2 class="section-title">Meus Aplicativos e Jogos</h2>
         <div class="games-grid">
 
-            <!-- CARD 1: EDITE FOTO, NOME, VERSÃO, DESCRIÇÃO E ARQUIVO .APK -->
+            <!-- CARD 1 -->
             <div class="game-card">
                 <img src="https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/imagem-jogo1.jpg" alt="Foto do Jogo 1" class="game-thumb" onerror="this.src='https://via.placeholder.com/400x200/334155/ffffff?text=Sua+Foto+Aqui'">
                 <h3>Meu Jogo 1</h3>
@@ -772,7 +799,7 @@
                 </a>
             </div>
 
-            <!-- CARD 2: EDITE FOTO, NOME, VERSÃO, DESCRIÇÃO E ARQUIVO .APK -->
+            <!-- CARD 2 -->
             <div class="game-card">
                 <img src="https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/imagem-jogo2.jpg" alt="Foto do Jogo 2" class="game-thumb" onerror="this.src='https://via.placeholder.com/400x200/334155/ffffff?text=Sua+Foto+Aqui'">
                 <h3>Meu Jogo 2</h3>
@@ -783,7 +810,7 @@
                 </a>
             </div>
 
-            <!-- CARD 3: EDITE FOTO, NOME, VERSÃO, DESCRIÇÃO E ARQUIVO .APK -->
+            <!-- CARD 3 -->
             <div class="game-card">
                 <img src="https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/imagem-app1.jpg" alt="Foto do App 3" class="game-thumb" onerror="this.src='https://via.placeholder.com/400x200/334155/ffffff?text=Sua+Foto+Aqui'">
                 <h3>Meu App Útil</h3>
@@ -801,7 +828,7 @@
     <div class="drawer-backdrop" id="drawerBackdrop"></div>
     <aside class="updates-drawer" id="updatesDrawer" aria-label="Atualizações dos aplicativos">
         <div class="drawer-header">
-            <h2>Atualizações dos Aplicativos</h2>
+            <h2>Atualizações dos Aplicativos ⚡</h2>
             <button type="button" class="close-drawer-btn" id="closeDrawerBtn" aria-label="Fechar">✕</button>
         </div>
 
@@ -809,27 +836,44 @@
             <!-- ATUALIZAÇÃO 1 (EDITE AQUI NO HTML) -->
             <div class="changelog-item">
                 <div class="changelog-top">
-                    <span class="changelog-app">NOME DO APLICATIVO: Super App do Marlony</span>
-                    <span class="changelog-ver">VERSÃO: 1.0.0</span>
+                    <span class="changelog-app">Super App do Marlony</span>
+                    <span class="changelog-ver">v1.0.0</span>
                 </div>
-                <span class="changelog-date">DATA: 22/11/2026</span>
-                <p class="changelog-notes">DESCRIÇÃO: Lançamento inicial do aplicativo principal com instalação direta via APK.</p>
+                <span class="changelog-date">22/11/2026</span>
+                <p class="changelog-notes">Lançamento inicial do aplicativo principal com instalação direta via APK.</p>
             </div>
 
             <!-- ATUALIZAÇÃO 2 (EDITE AQUI NO HTML) -->
             <div class="changelog-item">
                 <div class="changelog-top">
-                    <span class="changelog-app">NOME DO APLICATIVO: Meu Jogo 1</span>
-                    <span class="changelog-ver">VERSÃO: 1.2.0</span>
+                    <span class="changelog-app">Meu Jogo 1</span>
+                    <span class="changelog-ver">v1.2.0</span>
                 </div>
-                <span class="changelog-date">DATA: 20/11/2026</span>
-                <p class="changelog-notes">DESCRIÇÃO: Melhorias de desempenho no celular e correções gerais.</p>
+                <span class="changelog-date">20/11/2026</span>
+                <p class="changelog-notes">Melhorias de desempenho no celular e correções gerais.</p>
             </div>
         </div>
     </aside>
 
     <script>
-        // Alterna suavemente entre "Aplicativos e Jogos" e "Marlony"
+        // 1. GERADOR DE ESTRELAS CINTILANTES NO FUNDO DO TÍTULO
+        const starsContainer = document.getElementById('starsContainer');
+        const numEstrelas = 22;
+
+        for (let i = 0; i < numEstrelas; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 3 + 2; // tamanho entre 2px e 5px
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.setProperty('--duracao', `${Math.random() * 1.8 + 1.2}s`);
+            star.style.animationDelay = `${Math.random() * 2}s`;
+            starsContainer.appendChild(star);
+        }
+
+        // 2. ALTERNÂNCIA SUAVE ENTRE "Aplicativos e Jogos" E "Marlony"
         const brandTitle = document.getElementById('brandTitle');
         const titulosRotativos = [
             'Aplicativos e Jogos',
@@ -847,13 +891,17 @@
             }, 400);
         }, 4000);
 
-        // Pílula Liquid Glass: acompanha rolagem, expande no hover e move o brilho
+        // 3. PÍLULA LIQUID GLASS + ANIMAÇÃO AUTOMÁTICA EM 5 SEG DE INATIVIDADE
         const navbarWrapper = document.getElementById('navbarWrapper');
         const pill = document.getElementById('liquidGlassPill');
         const btnInicio = document.getElementById('btnInicio');
         const btnApps = document.getElementById('btnApps');
         const btnAtualizacoes = document.getElementById('btnAtualizacoes');
         const appsSection = document.getElementById('apps');
+
+        let tempoInativoTimer = null;
+        let brilhoInativoTimer = null;
+        let glowAngulo = 0;
 
         function atualizarBrilhoPorScroll() {
             const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
@@ -867,6 +915,36 @@
             navbarWrapper.classList.toggle('scrolled', window.scrollY > 24);
         }
 
+        function resetarInatividade() {
+            // Remove a expansão automática ao interagir
+            pill.classList.remove('idle-expand');
+            clearInterval(brilhoInativoTimer);
+            brilhoInativoTimer = null;
+
+            clearTimeout(tempoInativoTimer);
+            tempoInativoTimer = setTimeout(iniciarAnimacaoInatividade, 5000); // 5 segundos
+        }
+
+        function iniciarAnimacaoInatividade() {
+            pill.classList.add('idle-expand');
+
+            // Faz o brilho deslizar suavemente em círculo durante a expansão automática
+            if (!brilhoInativoTimer) {
+                brilhoInativoTimer = setInterval(() => {
+                    glowAngulo += 0.05;
+                    const x = 50 + Math.cos(glowAngulo) * 35;
+                    const y = 50 + Math.sin(glowAngulo) * 30;
+                    pill.style.setProperty('--glow-x', `${x}%`);
+                    pill.style.setProperty('--glow-y', `${y}%`);
+                }, 30);
+            }
+        }
+
+        // Detecta interações para resetar os 5 segundos
+        ['pointermove', 'pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(evt => {
+            window.addEventListener(evt, resetarInatividade, { passive: true });
+        });
+
         pill.addEventListener('pointermove', (e) => {
             const rect = pill.getBoundingClientRect();
             const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -878,8 +956,9 @@
         pill.addEventListener('pointerleave', atualizarBrilhoPorScroll);
         window.addEventListener('scroll', atualizarBrilhoPorScroll, { passive: true });
         atualizarBrilhoPorScroll();
+        resetarInatividade();
 
-        // Página lateral de Atualizações
+        // 4. PÁGINA LATERAL DE ATUALIZAÇÕES
         const updatesDrawer = document.getElementById('updatesDrawer');
         const drawerBackdrop = document.getElementById('drawerBackdrop');
         const closeDrawerBtn = document.getElementById('closeDrawerBtn');
@@ -917,7 +996,7 @@
         closeDrawerBtn.addEventListener('click', fecharAtualizacoes);
         drawerBackdrop.addEventListener('click', fecharAtualizacoes);
 
-        // Lógica dos botões elásticos de download (com reset automático)
+        // 5. BOTÕES ELÁSTICOS DE DOWNLOAD (MATERIAL 3 EXPRESSIVE)
         document.querySelectorAll('.m3-elastic-btn').forEach(btn => {
             const btnText = btn.querySelector('.btn-text');
             const defaultText = btn.dataset.textDefault || 'Baixar';
