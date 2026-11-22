@@ -277,7 +277,6 @@
             pointer-events: none;
         }
 
-        /* Pílula de vidro deslizante (usada apenas no Android via media query) */
         .android-glass-thumb {
             display: none;
         }
@@ -338,7 +337,6 @@
             z-index: 1;
         }
 
-        /* Anel de luz circulante interpolado suavemente (sem surgir ou cortar seco) */
         .social-circle-btn::after {
             content: "";
             position: absolute;
@@ -861,12 +859,12 @@
             }
 
             .top-brand-bar {
-                padding: 24px 16px 12px 118px;
+                padding: 24px 118px 12px 16px;
                 justify-content: flex-start;
             }
 
             .brand-title {
-                font-size: 1.45rem;
+                font-size: 1.42rem;
                 text-align: left;
             }
 
@@ -890,7 +888,7 @@
                 padding: 10px 12px;
                 gap: 8px;
                 border-radius: 36px;
-                touch-action: none;
+                touch-action: pan-y;
             }
 
             .liquid-glass-pill:hover,
@@ -905,67 +903,35 @@
                 transform: none;
             }
 
-            /* Pílula de vidro única com reflexão e borda óptica apenas no Android */
+            /* Pílula de vidro única com brilho ao redor da cor do ícone */
             .android-glass-thumb {
+                --thumb-glow: rgba(129, 140, 248, 0.55);
+                --thumb-tint: rgba(129, 140, 248, 0.22);
+
                 position: absolute;
                 top: 9px;
                 bottom: 9px;
                 left: 0;
                 width: 92px;
                 border-radius: 27px;
-                background:
-                    radial-gradient(
-                        115% 75% at 50% 0%,
-                        rgba(255, 255, 255, 0.36) 0%,
-                        rgba(255, 255, 255, 0.1) 55%,
-                        rgba(129, 140, 248, 0.14) 100%
-                    );
-                border: 1px solid rgba(255, 255, 255, 0.56);
-                backdrop-filter: blur(18px) saturate(210%) contrast(1.06);
-                -webkit-backdrop-filter: blur(18px) saturate(210%) contrast(1.06);
+                background: linear-gradient(
+                    150deg,
+                    rgba(255, 255, 255, 0.24) 0%,
+                    var(--thumb-tint) 55%,
+                    rgba(255, 255, 255, 0.1) 100%
+                );
+                border: 1px solid rgba(255, 255, 255, 0.48);
+                backdrop-filter: blur(18px) saturate(190%);
+                -webkit-backdrop-filter: blur(18px) saturate(190%);
                 box-shadow:
-                    0 8px 20px -6px rgba(0, 0, 0, 0.58),
-                    0 0 14px rgba(165, 180, 252, 0.25),
-                    inset 0 2px 2.5px rgba(255, 255, 255, 0.88),
-                    inset 0 -2px 3.5px rgba(255, 255, 255, 0.22);
+                    0 0 18px 2px var(--thumb-glow),
+                    0 8px 20px -6px rgba(0, 0, 0, 0.6),
+                    inset 0 1.5px 2px rgba(255, 255, 255, 0.75);
                 pointer-events: none;
                 z-index: 1;
-                will-change: transform;
+                will-change: transform, box-shadow;
                 display: block;
-                overflow: hidden;
-            }
-
-            /* Reflexo curvo superior na pílula de vidro */
-            .android-glass-thumb::before {
-                content: "";
-                position: absolute;
-                top: 2px;
-                left: 10%;
-                right: 10%;
-                height: 44%;
-                border-radius: 999px;
-                background: linear-gradient(
-                    to bottom,
-                    rgba(255, 255, 255, 0.42),
-                    rgba(255, 255, 255, 0.02)
-                );
-                pointer-events: none;
-            }
-
-            .android-glass-thumb.is-green-zone {
-                background:
-                    radial-gradient(
-                        115% 75% at 50% 0%,
-                        rgba(209, 250, 229, 0.36) 0%,
-                        rgba(16, 185, 129, 0.16) 60%,
-                        rgba(255, 255, 255, 0.08) 100%
-                    );
-                border-color: rgba(110, 231, 183, 0.68);
-                box-shadow:
-                    0 8px 20px -6px rgba(0, 0, 0, 0.58),
-                    0 0 14px rgba(16, 185, 129, 0.28),
-                    inset 0 2px 2.5px rgba(255, 255, 255, 0.9),
-                    inset 0 -2px 3.5px rgba(110, 231, 183, 0.28);
+                transition: box-shadow 220ms ease, background 220ms ease;
             }
 
             /* Ícones soltos sem caixinha própria no Android */
@@ -1010,11 +976,14 @@
                 width: 25px;
                 height: 25px;
                 filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
-                will-change: transform, filter;
-                transition: color 200ms ease;
+                transition: transform 200ms ease;
             }
 
-            /* Círculos GitHub e YouTube na parte esquerda e no topo no Android */
+            .pill-nav-btn.is-current .nav-icon {
+                transform: scale(1.08);
+            }
+
+            /* Círculos GitHub e YouTube na parte direita e no topo no Android */
             .social-circle-btn {
                 position: fixed;
                 top: 18px;
@@ -1023,11 +992,13 @@
             }
 
             #githubCircleBtn {
-                left: 14px;
+                right: 62px;
+                left: auto;
             }
 
             #youtubeCircleBtn {
-                left: 62px;
+                right: 14px;
+                left: auto;
             }
 
             .social-circle-btn svg {
@@ -1271,7 +1242,7 @@
             }, 400);
         }, 4000);
 
-        // 3. LUZ SUAVE SEM CORTE SECO + PÍLULA DESLIZANTE COM BOING SUTIL E REFRAÇÃO NO ANDROID
+        // 3. LUZ SUAVE SEM CORTE SECO + PÍLULA DESLIZANTE LEVE COM BRILHO DA COR DO ÍCONE NO ANDROID
         const navbarWrapper = document.getElementById('navbarWrapper');
         const pill = document.getElementById('liquidGlassPill');
         const androidThumb = document.getElementById('androidGlassThumb');
@@ -1284,7 +1255,6 @@
             document.getElementById('btnApps'),
             document.getElementById('btnAtualizacoes')
         ];
-        const navIcons = navButtons.map(btn => btn.querySelector('.nav-icon'));
         const [btnInicio, btnApps, btnAtualizacoes] = navButtons;
         const appsSection = document.getElementById('apps');
 
@@ -1339,34 +1309,6 @@
             tempoInativoTimer = setTimeout(entrarInatividade, 5000);
         }
 
-        function animarBrilhoSuave() {
-            if (estaInativo) {
-                idleFase += 0.018;
-                orbitAngulo = (orbitAngulo + 2.4) % 360;
-                alvoGlowX = 50 + Math.cos(idleFase) * 34;
-                alvoGlowY = 50 + Math.sin(idleFase * 1.2) * 28;
-            }
-
-            atualGlowX += (alvoGlowX - atualGlowX) * 0.065;
-            atualGlowY += (alvoGlowY - atualGlowY) * 0.065;
-            atualOrbitStrength += (alvoOrbitStrength - atualOrbitStrength) * 0.055;
-
-            const gx = `${atualGlowX.toFixed(2)}%`;
-            const gy = `${atualGlowY.toFixed(2)}%`;
-
-            pill.style.setProperty('--glow-x', gx);
-            pill.style.setProperty('--glow-y', gy);
-
-            socialCircles.forEach(circle => {
-                circle.style.setProperty('--glow-x', gx);
-                circle.style.setProperty('--glow-y', gy);
-                circle.style.setProperty('--orbit-angle', `${orbitAngulo.toFixed(1)}deg`);
-                circle.style.setProperty('--orbit-strength', atualOrbitStrength.toFixed(3));
-            });
-
-            requestAnimationFrame(animarBrilhoSuave);
-        }
-
         ['pointermove', 'pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(evt => {
             window.addEventListener(evt, resetarInatividade, { passive: true });
         });
@@ -1393,34 +1335,53 @@
         window.addEventListener('scroll', atualizarScrollNavbar, { passive: true });
         atualizarScrollNavbar();
         resetarInatividade();
-        requestAnimationFrame(animarBrilhoSuave);
 
-        // 4. PÍLULA DE VIDRO SUTIL COM BOING CONTIDO E DISTORÇÃO NA BORDA (SOMENTE NO ANDROID)
+        // 4. PÍLULA DE VIDRO LEVE E RÁPIDA COM BRILHO DA COR DO ÍCONE (SOMENTE NO ANDROID)
+        const coresPorIndice = [
+            { glow: 'rgba(129, 140, 248, 0.62)', tint: 'rgba(99, 102, 241, 0.24)' }, // Início (Índigo)
+            { glow: 'rgba(56, 189, 248, 0.62)', tint: 'rgba(56, 189, 248, 0.22)' },  // Apps (Azul Céu)
+            { glow: 'rgba(52, 211, 153, 0.65)', tint: 'rgba(16, 185, 129, 0.25)' }   // Atualizações (Verde)
+        ];
+
+        let pillLarguraCache = 368;
+        let thumbLarguraCache = 92;
         let thumbX = 0;
         let thumbTargetX = 0;
         let thumbVelX = 0;
         let thumbScaleX = 1;
         let thumbScaleY = 1;
         let arrastandoThumb = false;
+        let moveuDuranteArraste = false;
         let indiceAlvoAndroid = 0;
 
         function isAndroidMobile() {
             return window.innerWidth <= 640;
         }
 
-        function obterCentroDoBotao(btn) {
+        function medirDimensoesAndroid() {
             const pillRect = pill.getBoundingClientRect();
-            const btnRect = btn.getBoundingClientRect();
-            const thumbWidth = androidThumb.offsetWidth || 92;
-            const centroBtn = (btnRect.left - pillRect.left) + (btnRect.width / 2);
-            return centroBtn - (thumbWidth / 2);
+            pillLarguraCache = pillRect.width || 368;
+            thumbLarguraCache = androidThumb.offsetWidth || 92;
+        }
+
+        function calcularPosicaoPorIndice(idx) {
+            const paddingX = 12;
+            const utilWidth = Math.max(thumbLarguraCache, pillLarguraCache - paddingX * 2);
+            const passo = (utilWidth - thumbLarguraCache) / 2;
+            return paddingX + passo * idx;
+        }
+
+        function aplicarCorDoIcone(idx) {
+            const cor = coresPorIndice[idx] || coresPorIndice[0];
+            androidThumb.style.setProperty('--thumb-glow', cor.glow);
+            androidThumb.style.setProperty('--thumb-tint', cor.tint);
         }
 
         function sincronizarThumbComIndice(imediato = false) {
             if (!isAndroidMobile()) return;
-            const btnAlvo = navButtons[indiceAlvoAndroid] || btnInicio;
-            thumbTargetX = obterCentroDoBotao(btnAlvo);
-            androidThumb.classList.toggle('is-green-zone', indiceAlvoAndroid === 2);
+            medirDimensoesAndroid();
+            thumbTargetX = calcularPosicaoPorIndice(indiceAlvoAndroid);
+            aplicarCorDoIcone(indiceAlvoAndroid);
 
             if (imediato) {
                 thumbX = thumbTargetX;
@@ -1428,138 +1389,105 @@
             }
         }
 
-        function atualizarDistorcaoBordaIcones() {
-            const pillRect = pill.getBoundingClientRect();
-            const thumbWidth = androidThumb.offsetWidth || 92;
-            const thumbLeft = pillRect.left + thumbX;
-            const thumbRight = thumbLeft + thumbWidth;
-            const thumbCenter = thumbLeft + thumbWidth / 2;
-            const halfW = thumbWidth / 2;
+        function loopAnimacaoUnificado() {
+            // Atualização leve do brilho ambiente
+            if (estaInativo) {
+                idleFase += 0.018;
+                orbitAngulo = (orbitAngulo + 2.4) % 360;
+                alvoGlowX = 50 + Math.cos(idleFase) * 34;
+                alvoGlowY = 50 + Math.sin(idleFase * 1.2) * 28;
+            }
 
-            navButtons.forEach((btn, idx) => {
-                const icon = navIcons[idx];
-                if (!icon) return;
+            atualGlowX += (alvoGlowX - atualGlowX) * 0.07;
+            atualGlowY += (alvoGlowY - atualGlowY) * 0.07;
+            atualOrbitStrength += (alvoOrbitStrength - atualOrbitStrength) * 0.06;
 
-                const btnRect = btn.getBoundingClientRect();
-                const iconCenter = btnRect.left + btnRect.width / 2;
-                const distFromCenter = iconCenter - thumbCenter;
-                const normDist = distFromCenter / halfW; // -1 na borda esquerda, 0 no centro, +1 na borda direita
-                const absNorm = Math.abs(normDist);
+            const gx = `${atualGlowX.toFixed(1)}%`;
+            const gy = `${atualGlowY.toFixed(1)}%`;
+            pill.style.setProperty('--glow-x', gx);
+            pill.style.setProperty('--glow-y', gy);
 
-                // Distorção óptica sutil na borda da pílula ao passar sobre o ícone (zera quando assenta no centro)
-                let skewX = 0;
-                let scaleX = 1;
-                let scaleY = 1;
-                let shiftX = 0;
-
-                if (absNorm > 0.35 && absNorm < 1.35) {
-                    const edgeFactor = 1 - Math.abs(absNorm - 0.85) / 0.5;
-                    const clampedEdge = Math.max(0, Math.min(1, edgeFactor));
-                    const dir = Math.sign(normDist);
-
-                    skewX = -dir * 11 * clampedEdge;
-                    scaleX = 1 + 0.08 * clampedEdge;
-                    scaleY = 1 - 0.09 * clampedEdge;
-                    shiftX = -dir * 2.5 * clampedEdge;
-                } else if (absNorm <= 0.35) {
-                    const centerFactor = 1 - absNorm / 0.35;
-                    scaleX = 1 + 0.05 * centerFactor;
-                    scaleY = 1 + 0.05 * centerFactor;
-                }
-
-                icon.style.transform = `translate3d(${shiftX.toFixed(2)}px, 0, 0) skewX(${skewX.toFixed(2)}deg) scale(${scaleX.toFixed(3)}, ${scaleY.toFixed(3)})`;
-                const pertoDaBorda = absNorm > 0.45 && absNorm < 1.25;
-                icon.style.filter = pertoDaBorda
-                    ? 'drop-shadow(0 0 6px rgba(255, 255, 255, 0.35))'
-                    : 'drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45))';
+            socialCircles.forEach(circle => {
+                circle.style.setProperty('--glow-x', gx);
+                circle.style.setProperty('--glow-y', gy);
+                circle.style.setProperty('--orbit-angle', `${orbitAngulo.toFixed(1)}deg`);
+                circle.style.setProperty('--orbit-strength', atualOrbitStrength.toFixed(2));
             });
-        }
 
-        function atualizarFisicaThumb() {
+            // Física rápida e leve da pílula de vidro no Android
             if (isAndroidMobile()) {
-                // Boing sutil e bem contido para não esticar exageradamente para fora do ícone
-                const stiffness = arrastandoThumb ? 0.38 : 0.14;
-                const damping = arrastandoThumb ? 0.74 : 0.78;
+                const stiffness = arrastandoThumb ? 0.55 : 0.28;
+                const damping = arrastandoThumb ? 0.68 : 0.72;
 
                 const forceX = (thumbTargetX - thumbX) * stiffness;
                 thumbVelX = (thumbVelX + forceX) * damping;
                 thumbX += thumbVelX;
 
-                const stretch = Math.min(0.055, Math.abs(thumbVelX) * 0.0045);
+                const stretch = Math.min(0.05, Math.abs(thumbVelX) * 0.004);
                 const targetScaleX = arrastandoThumb ? 1.03 : (1 + stretch);
                 const targetScaleY = arrastandoThumb ? 0.98 : (1 - stretch * 0.6);
 
-                thumbScaleX += (targetScaleX - thumbScaleX) * 0.18;
-                thumbScaleY += (targetScaleY - thumbScaleY) * 0.18;
+                thumbScaleX += (targetScaleX - thumbScaleX) * 0.25;
+                thumbScaleY += (targetScaleY - thumbScaleY) * 0.25;
 
-                androidThumb.style.transform = `translate3d(${thumbX.toFixed(2)}px, 0, 0) scale(${thumbScaleX.toFixed(3)}, ${thumbScaleY.toFixed(3)})`;
-                atualizarDistorcaoBordaIcones();
-            } else {
-                navIcons.forEach(icon => {
-                    if (icon) {
-                        icon.style.transform = '';
-                        icon.style.filter = '';
-                    }
-                });
+                androidThumb.style.transform = `translate3d(${thumbX.toFixed(1)}px, 0, 0) scale(${thumbScaleX.toFixed(3)}, ${thumbScaleY.toFixed(3)})`;
             }
 
-            requestAnimationFrame(atualizarFisicaThumb);
+            requestAnimationFrame(loopAnimacaoUnificado);
         }
 
-        function encontrarBotaoMaisProximo(clientX) {
-            let melhorIdx = 0;
-            let menorDistancia = Infinity;
-
-            navButtons.forEach((btn, idx) => {
-                const r = btn.getBoundingClientRect();
-                const centro = r.left + r.width / 2;
-                const dist = Math.abs(clientX - centro);
-                if (dist < menorDistancia) {
-                    menorDistancia = dist;
-                    melhorIdx = idx;
-                }
-            });
-
-            return melhorIdx;
+        function obterIndicePorXLocal(localX) {
+            const terco = pillLarguraCache / 3;
+            if (localX < terco) return 0;
+            if (localX < terco * 2) return 1;
+            return 2;
         }
 
         pill.addEventListener('pointerdown', (e) => {
             if (!isAndroidMobile()) return;
+            medirDimensoesAndroid();
             arrastandoThumb = true;
+            moveuDuranteArraste = false;
             pill.setPointerCapture(e.pointerId);
 
             const pillRect = pill.getBoundingClientRect();
-            const thumbWidth = androidThumb.offsetWidth || 92;
-            const minX = 8;
-            const maxX = Math.max(minX, pillRect.width - thumbWidth - 8);
-            const rawX = (e.clientX - pillRect.left) - (thumbWidth / 2);
-            thumbTargetX = Math.min(maxX, Math.max(minX, rawX));
+            const localX = e.clientX - pillRect.left;
+            const minX = 12;
+            const maxX = Math.max(minX, pillLarguraCache - thumbLarguraCache - 12);
+            thumbTargetX = Math.min(maxX, Math.max(minX, localX - thumbLarguraCache / 2));
+            aplicarCorDoIcone(obterIndicePorXLocal(localX));
         });
 
         pill.addEventListener('pointermove', (e) => {
             if (!isAndroidMobile() || !arrastandoThumb) return;
+            moveuDuranteArraste = true;
             const pillRect = pill.getBoundingClientRect();
-            const thumbWidth = androidThumb.offsetWidth || 92;
-            const minX = 8;
-            const maxX = Math.max(minX, pillRect.width - thumbWidth - 8);
-            const rawX = (e.clientX - pillRect.left) - (thumbWidth / 2);
-            thumbTargetX = Math.min(maxX, Math.max(minX, rawX));
-            androidThumb.classList.toggle('is-green-zone', encontrarBotaoMaisProximo(e.clientX) === 2);
+            const localX = e.clientX - pillRect.left;
+            const minX = 12;
+            const maxX = Math.max(minX, pillLarguraCache - thumbLarguraCache - 12);
+            thumbTargetX = Math.min(maxX, Math.max(minX, localX - thumbLarguraCache / 2));
+            aplicarCorDoIcone(obterIndicePorXLocal(localX));
         });
 
-        function finalizarArrasteThumb(e) {
+        function encerrarPointerNaPill(e) {
             if (!isAndroidMobile() || !arrastandoThumb) return;
             arrastandoThumb = false;
             if (pill.hasPointerCapture(e.pointerId)) {
                 pill.releasePointerCapture(e.pointerId);
             }
 
-            const idxEscolhido = encontrarBotaoMaisProximo(e.clientX);
-            executarAcaoBotao(idxEscolhido);
+            const pillRect = pill.getBoundingClientRect();
+            const localX = e.clientX - pillRect.left;
+            const idxEscolhido = obterIndicePorXLocal(localX);
+
+            // Se foi arraste, aciona o índice solto; se foi toque rápido, o evento click do botão também garante a ação
+            if (moveuDuranteArraste) {
+                executarAcaoBotao(idxEscolhido);
+            }
         }
 
-        pill.addEventListener('pointerup', finalizarArrasteThumb);
-        pill.addEventListener('pointercancel', finalizarArrasteThumb);
+        pill.addEventListener('pointerup', encerrarPointerNaPill);
+        pill.addEventListener('pointercancel', encerrarPointerNaPill);
 
         // 5. PÁGINA LATERAL DE ATUALIZAÇÕES E NAVEGAÇÃO
         const updatesDrawer = document.getElementById('updatesDrawer');
@@ -1611,7 +1539,7 @@
         });
 
         setTimeout(() => sincronizarThumbComIndice(true), 50);
-        requestAnimationFrame(atualizarFisicaThumb);
+        requestAnimationFrame(loopAnimacaoUnificado);
 
         // 6. BOTÕES ELÁSTICOS DE DOWNLOAD (MATERIAL 3 EXPRESSIVE)
         document.querySelectorAll('.m3-elastic-btn').forEach(btn => {
