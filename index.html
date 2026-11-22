@@ -397,7 +397,7 @@
 
         .pill-nav-btn {
             position: relative;
-            z-index: 1;
+            z-index: 2;
             flex: 1;
             padding: 10px 12px;
             border-radius: 9999px;
@@ -885,8 +885,8 @@
                 width: 100%;
                 max-width: 392px;
                 min-height: 70px;
-                padding: 10px 12px;
-                gap: 8px;
+                padding: 10px;
+                gap: 6px;
                 border-radius: 36px;
                 touch-action: pan-y;
             }
@@ -898,22 +898,22 @@
                 width: 100%;
                 max-width: 392px;
                 min-height: 70px;
-                padding: 10px 12px;
-                gap: 8px;
+                padding: 10px;
+                gap: 6px;
                 transform: none;
             }
 
-            /* Pílula de vidro única com brilho ao redor da cor do ícone */
+            /* Pílula de vidro única centralizada em cada ícone com brilho da cor do ícone */
             .android-glass-thumb {
-                --thumb-glow: rgba(129, 140, 248, 0.55);
-                --thumb-tint: rgba(129, 140, 248, 0.22);
+                --thumb-glow: rgba(129, 140, 248, 0.62);
+                --thumb-tint: rgba(99, 102, 241, 0.24);
 
                 position: absolute;
                 top: 9px;
                 bottom: 9px;
                 left: 0;
-                width: 92px;
-                border-radius: 27px;
+                width: 82px;
+                border-radius: 26px;
                 background: linear-gradient(
                     150deg,
                     rgba(255, 255, 255, 0.24) 0%,
@@ -931,7 +931,7 @@
                 z-index: 1;
                 will-change: transform, box-shadow;
                 display: block;
-                transition: box-shadow 220ms ease, background 220ms ease;
+                transition: box-shadow 180ms ease, background 180ms ease;
             }
 
             /* Ícones soltos sem caixinha própria no Android */
@@ -976,7 +976,7 @@
                 width: 25px;
                 height: 25px;
                 filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
-                transition: transform 200ms ease;
+                transition: transform 180ms ease;
             }
 
             .pill-nav-btn.is-current .nav-icon {
@@ -1242,7 +1242,7 @@
             }, 400);
         }, 4000);
 
-        // 3. LUZ SUAVE SEM CORTE SECO + PÍLULA DESLIZANTE LEVE COM BRILHO DA COR DO ÍCONE NO ANDROID
+        // 3. LUZ SUAVE SEM CORTE SECO + PÍLULA CENTRALIZADA, RÁPIDA E AUTOMÁTICA NO SCROLL (ANDROID)
         const navbarWrapper = document.getElementById('navbarWrapper');
         const pill = document.getElementById('liquidGlassPill');
         const androidThumb = document.getElementById('androidGlassThumb');
@@ -1257,9 +1257,14 @@
         ];
         const [btnInicio, btnApps, btnAtualizacoes] = navButtons;
         const appsSection = document.getElementById('apps');
+        const updatesDrawer = document.getElementById('updatesDrawer');
+        const drawerBackdrop = document.getElementById('drawerBackdrop');
+        const closeDrawerBtn = document.getElementById('closeDrawerBtn');
 
         let tempoInativoTimer = null;
         let estaInativo = false;
+        let navegandoPorClique = false;
+        let navegandoTimer = null;
 
         let atualGlowX = 50;
         let atualGlowY = 50;
@@ -1269,6 +1274,69 @@
         let alvoOrbitStrength = 0;
         let orbitAngulo = 0;
         let idleFase = 0;
+
+        const coresPorIndice = [
+            { glow: 'rgba(129, 140, 248, 0.65)', tint: 'rgba(99, 102, 241, 0.25)' },
+            { glow: 'rgba(56, 189, 248, 0.65)', tint: 'rgba(56, 189, 248, 0.23)' },
+            { glow: 'rgba(52, 211, 153, 0.68)', tint: 'rgba(16, 185, 129, 0.26)' }
+        ];
+
+        let thumbLarguraCache = 82;
+        let thumbX = 0;
+        let thumbTargetX = 0;
+        let thumbVelX = 0;
+        let thumbScaleX = 1;
+        let thumbScaleY = 1;
+        let arrastandoThumb = false;
+        let pointerStartX = 0;
+        let arrasteAtivo = false;
+        let indiceAlvoAndroid = 0;
+
+        function isAndroidMobile() {
+            return window.innerWidth <= 640;
+        }
+
+        function aplicarCorDoIcone(idx) {
+            const cor = coresPorIndice[idx] || coresPorIndice[0];
+            androidThumb.style.setProperty('--thumb-glow', cor.glow);
+            androidThumb.style.setProperty('--thumb-tint', cor.tint);
+        }
+
+        function obterPosicaoCentralDoBotao(idx) {
+            const btn = navButtons[idx] || btnInicio;
+            thumbLarguraCache = androidThumb.offsetWidth || 82;
+            const centroBtnLocal = btn.offsetLeft + (btn.offsetWidth / 2);
+            return centroBtnLocal - (thumbLarguraCache / 2);
+        }
+
+        function sincronizarThumbComIndice(imediato = false) {
+            if (!isAndroidMobile()) return;
+            thumbTargetX = obterPosicaoCentralDoBotao(indiceAlvoAndroid);
+            aplicarCorDoIcone(indiceAlvoAndroid);
+
+            if (imediato) {
+                thumbX = thumbTargetX;
+                thumbVelX = 0;
+            }
+        }
+
+        function marcarEstadoAtivo(idx) {
+            indiceAlvoAndroid = idx;
+            navButtons.forEach((b, i) => b.classList.toggle('is-current', i === idx));
+            sincronizarThumbComIndice(false);
+        }
+
+        function sincronizarPorRolagem() {
+            if (!isAndroidMobile() || navegandoPorClique || arrasteAtivo) return;
+            if (updatesDrawer.classList.contains('open')) return;
+
+            const topoApps = appsSection.getBoundingClientRect().top;
+            const novoIdx = topoApps <= window.innerHeight * 0.45 ? 1 : 0;
+
+            if (novoIdx !== indiceAlvoAndroid) {
+                marcarEstadoAtivo(novoIdx);
+            }
+        }
 
         function calcularBrilhoPorScroll() {
             const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
@@ -1286,6 +1354,7 @@
                 alvoGlowX = pos.x;
                 alvoGlowY = pos.y;
             }
+            sincronizarPorRolagem();
         }
 
         function entrarInatividade() {
@@ -1336,61 +1405,8 @@
         atualizarScrollNavbar();
         resetarInatividade();
 
-        // 4. PÍLULA DE VIDRO LEVE E RÁPIDA COM BRILHO DA COR DO ÍCONE (SOMENTE NO ANDROID)
-        const coresPorIndice = [
-            { glow: 'rgba(129, 140, 248, 0.62)', tint: 'rgba(99, 102, 241, 0.24)' }, // Início (Índigo)
-            { glow: 'rgba(56, 189, 248, 0.62)', tint: 'rgba(56, 189, 248, 0.22)' },  // Apps (Azul Céu)
-            { glow: 'rgba(52, 211, 153, 0.65)', tint: 'rgba(16, 185, 129, 0.25)' }   // Atualizações (Verde)
-        ];
-
-        let pillLarguraCache = 368;
-        let thumbLarguraCache = 92;
-        let thumbX = 0;
-        let thumbTargetX = 0;
-        let thumbVelX = 0;
-        let thumbScaleX = 1;
-        let thumbScaleY = 1;
-        let arrastandoThumb = false;
-        let moveuDuranteArraste = false;
-        let indiceAlvoAndroid = 0;
-
-        function isAndroidMobile() {
-            return window.innerWidth <= 640;
-        }
-
-        function medirDimensoesAndroid() {
-            const pillRect = pill.getBoundingClientRect();
-            pillLarguraCache = pillRect.width || 368;
-            thumbLarguraCache = androidThumb.offsetWidth || 92;
-        }
-
-        function calcularPosicaoPorIndice(idx) {
-            const paddingX = 12;
-            const utilWidth = Math.max(thumbLarguraCache, pillLarguraCache - paddingX * 2);
-            const passo = (utilWidth - thumbLarguraCache) / 2;
-            return paddingX + passo * idx;
-        }
-
-        function aplicarCorDoIcone(idx) {
-            const cor = coresPorIndice[idx] || coresPorIndice[0];
-            androidThumb.style.setProperty('--thumb-glow', cor.glow);
-            androidThumb.style.setProperty('--thumb-tint', cor.tint);
-        }
-
-        function sincronizarThumbComIndice(imediato = false) {
-            if (!isAndroidMobile()) return;
-            medirDimensoesAndroid();
-            thumbTargetX = calcularPosicaoPorIndice(indiceAlvoAndroid);
-            aplicarCorDoIcone(indiceAlvoAndroid);
-
-            if (imediato) {
-                thumbX = thumbTargetX;
-                thumbVelX = 0;
-            }
-        }
-
+        // Loop leve e rápido da pílula e do brilho
         function loopAnimacaoUnificado() {
-            // Atualização leve do brilho ambiente
             if (estaInativo) {
                 idleFase += 0.018;
                 orbitAngulo = (orbitAngulo + 2.4) % 360;
@@ -1398,9 +1414,9 @@
                 alvoGlowY = 50 + Math.sin(idleFase * 1.2) * 28;
             }
 
-            atualGlowX += (alvoGlowX - atualGlowX) * 0.07;
-            atualGlowY += (alvoGlowY - atualGlowY) * 0.07;
-            atualOrbitStrength += (alvoOrbitStrength - atualOrbitStrength) * 0.06;
+            atualGlowX += (alvoGlowX - atualGlowX) * 0.08;
+            atualGlowY += (alvoGlowY - atualGlowY) * 0.08;
+            atualOrbitStrength += (alvoOrbitStrength - atualOrbitStrength) * 0.07;
 
             const gx = `${atualGlowX.toFixed(1)}%`;
             const gy = `${atualGlowY.toFixed(1)}%`;
@@ -1414,21 +1430,21 @@
                 circle.style.setProperty('--orbit-strength', atualOrbitStrength.toFixed(2));
             });
 
-            // Física rápida e leve da pílula de vidro no Android
             if (isAndroidMobile()) {
-                const stiffness = arrastandoThumb ? 0.55 : 0.28;
-                const damping = arrastandoThumb ? 0.68 : 0.72;
+                // Mola rápida e leve para respostas ágeis entre todos os ícones
+                const stiffness = arrasteAtivo ? 0.65 : 0.36;
+                const damping = arrasteAtivo ? 0.65 : 0.72;
 
                 const forceX = (thumbTargetX - thumbX) * stiffness;
                 thumbVelX = (thumbVelX + forceX) * damping;
                 thumbX += thumbVelX;
 
-                const stretch = Math.min(0.05, Math.abs(thumbVelX) * 0.004);
-                const targetScaleX = arrastandoThumb ? 1.03 : (1 + stretch);
-                const targetScaleY = arrastandoThumb ? 0.98 : (1 - stretch * 0.6);
+                const stretch = Math.min(0.045, Math.abs(thumbVelX) * 0.003);
+                const targetScaleX = arrasteAtivo ? 1.03 : (1 + stretch);
+                const targetScaleY = arrasteAtivo ? 0.98 : (1 - stretch * 0.5);
 
-                thumbScaleX += (targetScaleX - thumbScaleX) * 0.25;
-                thumbScaleY += (targetScaleY - thumbScaleY) * 0.25;
+                thumbScaleX += (targetScaleX - thumbScaleX) * 0.3;
+                thumbScaleY += (targetScaleY - thumbScaleY) * 0.3;
 
                 androidThumb.style.transform = `translate3d(${thumbX.toFixed(1)}px, 0, 0) scale(${thumbScaleX.toFixed(3)}, ${thumbScaleY.toFixed(3)})`;
             }
@@ -1436,93 +1452,94 @@
             requestAnimationFrame(loopAnimacaoUnificado);
         }
 
-        function obterIndicePorXLocal(localX) {
-            const terco = pillLarguraCache / 3;
-            if (localX < terco) return 0;
-            if (localX < terco * 2) return 1;
-            return 2;
+        function obterIndiceMaisProximo(clientX) {
+            let melhorIdx = 0;
+            let menorDist = Infinity;
+
+            navButtons.forEach((btn, idx) => {
+                const r = btn.getBoundingClientRect();
+                const centro = r.left + r.width / 2;
+                const dist = Math.abs(clientX - centro);
+                if (dist < menorDist) {
+                    menorDist = dist;
+                    melhorIdx = idx;
+                }
+            });
+
+            return melhorIdx;
         }
 
         pill.addEventListener('pointerdown', (e) => {
             if (!isAndroidMobile()) return;
-            medirDimensoesAndroid();
             arrastandoThumb = true;
-            moveuDuranteArraste = false;
-            pill.setPointerCapture(e.pointerId);
+            arrasteAtivo = false;
+            pointerStartX = e.clientX;
+        }, { passive: true });
 
-            const pillRect = pill.getBoundingClientRect();
-            const localX = e.clientX - pillRect.left;
-            const minX = 12;
-            const maxX = Math.max(minX, pillLarguraCache - thumbLarguraCache - 12);
-            thumbTargetX = Math.min(maxX, Math.max(minX, localX - thumbLarguraCache / 2));
-            aplicarCorDoIcone(obterIndicePorXLocal(localX));
-        });
-
-        pill.addEventListener('pointermove', (e) => {
+        window.addEventListener('pointermove', (e) => {
             if (!isAndroidMobile() || !arrastandoThumb) return;
-            moveuDuranteArraste = true;
-            const pillRect = pill.getBoundingClientRect();
-            const localX = e.clientX - pillRect.left;
-            const minX = 12;
-            const maxX = Math.max(minX, pillLarguraCache - thumbLarguraCache - 12);
-            thumbTargetX = Math.min(maxX, Math.max(minX, localX - thumbLarguraCache / 2));
-            aplicarCorDoIcone(obterIndicePorXLocal(localX));
-        });
-
-        function encerrarPointerNaPill(e) {
-            if (!isAndroidMobile() || !arrastandoThumb) return;
-            arrastandoThumb = false;
-            if (pill.hasPointerCapture(e.pointerId)) {
-                pill.releasePointerCapture(e.pointerId);
+            if (Math.abs(e.clientX - pointerStartX) > 10) {
+                arrasteAtivo = true;
             }
+            if (!arrasteAtivo) return;
 
             const pillRect = pill.getBoundingClientRect();
-            const localX = e.clientX - pillRect.left;
-            const idxEscolhido = obterIndicePorXLocal(localX);
+            const minX = 10;
+            const maxX = Math.max(minX, pillRect.width - thumbLarguraCache - 10);
+            const rawX = (e.clientX - pillRect.left) - (thumbLarguraCache / 2);
+            thumbTargetX = Math.min(maxX, Math.max(minX, rawX));
+            aplicarCorDoIcone(obterIndiceMaisProximo(e.clientX));
+        }, { passive: true });
 
-            // Se foi arraste, aciona o índice solto; se foi toque rápido, o evento click do botão também garante a ação
-            if (moveuDuranteArraste) {
+        window.addEventListener('pointerup', (e) => {
+            if (!isAndroidMobile() || !arrastandoThumb) return;
+            const foiArraste = arrasteAtivo;
+            arrastandoThumb = false;
+            arrasteAtivo = false;
+
+            if (foiArraste) {
+                const idxEscolhido = obterIndiceMaisProximo(e.clientX);
                 executarAcaoBotao(idxEscolhido);
             }
-        }
+        });
 
-        pill.addEventListener('pointerup', encerrarPointerNaPill);
-        pill.addEventListener('pointercancel', encerrarPointerNaPill);
-
-        // 5. PÁGINA LATERAL DE ATUALIZAÇÕES E NAVEGAÇÃO
-        const updatesDrawer = document.getElementById('updatesDrawer');
-        const drawerBackdrop = document.getElementById('drawerBackdrop');
-        const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+        window.addEventListener('pointercancel', () => {
+            arrastandoThumb = false;
+            arrasteAtivo = false;
+            sincronizarThumbComIndice(false);
+        });
 
         function abrirAtualizacoes() {
             updatesDrawer.classList.add('open');
             drawerBackdrop.classList.add('open');
-            btnAtualizacoes.classList.add('is-current');
-            btnInicio.classList.remove('is-current');
-            btnApps.classList.remove('is-current');
+            marcarEstadoAtivo(2);
         }
 
         function fecharAtualizacoes() {
             updatesDrawer.classList.remove('open');
             drawerBackdrop.classList.remove('open');
             btnAtualizacoes.classList.remove('is-current');
+            if (isAndroidMobile()) {
+                sincronizarPorRolagem();
+            }
         }
 
         function executarAcaoBotao(idx) {
-            indiceAlvoAndroid = idx;
-            sincronizarThumbComIndice(false);
+            navegandoPorClique = true;
+            clearTimeout(navegandoTimer);
+            navegandoTimer = setTimeout(() => {
+                navegandoPorClique = false;
+            }, 850);
+
+            marcarEstadoAtivo(idx);
 
             if (idx === 0) {
                 fecharAtualizacoes();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                btnInicio.classList.add('is-current');
-                btnApps.classList.remove('is-current');
             } else if (idx === 1) {
                 fecharAtualizacoes();
                 const topoApps = appsSection.getBoundingClientRect().top + window.scrollY - 95;
                 window.scrollTo({ top: topoApps, behavior: 'smooth' });
-                btnApps.classList.add('is-current');
-                btnInicio.classList.remove('is-current');
             } else if (idx === 2) {
                 abrirAtualizacoes();
             }
@@ -1538,7 +1555,7 @@
             sincronizarThumbComIndice(true);
         });
 
-        setTimeout(() => sincronizarThumbComIndice(true), 50);
+        setTimeout(() => sincronizarThumbComIndice(true), 60);
         requestAnimationFrame(loopAnimacaoUnificado);
 
         // 6. BOTÕES ELÁSTICOS DE DOWNLOAD (MATERIAL 3 EXPRESSIVE)
