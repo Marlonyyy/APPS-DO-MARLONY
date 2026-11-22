@@ -1,48 +1,40 @@
-# 📱✨ Aplicativos e Jogos — Marlony
+# 📱 Aplicativos e Jogos — Marlony 🎮
 
-> Uma vitrine digital criativa e direta ao ponto para apresentar, divulgar e disponibilizar **aplicativos e jogos em APK** de forma simples, rápida e visualmente marcante! 🚀🎮
-
----
-
-## 💡 O que é este site?
-
-Este projeto funciona como um **hub / loja própria de apps e jogos independentes** na web. Em vez de depender apenas de links soltos ou mensagens espalhadas, quem acessa o site encontra em um só lugar:
-
-* 🌟 **Aplicativo Principal em Destaque:** um espaço grande e chamativo para o seu app carro-chefe, com versão, descrição e botão de download direto.
-* 🎮 **Catálogo de Jogos e Ferramentas:** cards organizados para exibir seus jogos, utilitários e novos projetos conforme forem sendo lançados.
-* 📥 **Download Rápido de APK:** botões interativos com animação elástica e feedback visual de download para facilitar a instalação no celular.
-* 📰 **Painel Lateral de Atualizações:** uma aba deslizante (*drawer*) para registrar novidades, melhorias de desempenho e correções de versão sem poluir a tela principal.
+Bem-vindo ao repositório oficial do meu portal de **Aplicativos e Jogos**! 🚀  
+Aqui eu reúno e disponibilizo para download direto os meus próprios aplicativos, jogos e ferramentas em formato **APK** para Android, junto com novidades, versões e histórico de melhorias.
 
 ---
 
-## 🎯 Possibilidades de uso desse projeto
+## ✨ O que este site faz?
 
-Esse tipo de site pode crescer junto com as suas ideias! Veja o que ele pode se tornar:
+Este projeto funciona como uma **vitrine própria e centralizada** para divulgar e distribuir meus apps sem depender de intermediários complicados:
 
-1. **Portfólio de Criador / Desenvolvedor:** mostre tudo o que você cria, testa e publica em um endereço único.
-2. **Central de Distribuição para Amigos e Comunidade:** compartilhe versões de teste, lançamentos independentes e atualizações com facilidade.
-3. **Vitrine de Ferramentas e Jogos Leves:** organize mini-jogos, aplicativos utilitários e experimentos criativos em um visual escuro moderno (`#0f172a`) com detalhes em vidro (*Liquid Glass*).
-4. **Diário de Versões (Changelog):** mantenha o público informado sobre o que mudou em cada nova versão (`1.0.0`, `1.2.0`, `2.1.0`...).
-
----
-
-## 🎨 Destaques do Visual e da Experiência
-
-* 🌈 **Título animadão com gradiente contínuo** alternando entre *Aplicativos e Jogos* e *Marlony*.
-* 🫧 **Barra de navegação em Pílula Liquid Glass** que acompanha a rolagem, reage ao toque/cursor e leva direto para **Início**, **Apps** ou **Atualizações**.
-* 📲 **Layout responsivo:** adaptado tanto para computadores quanto para telas de celular.
-* 🛠️ **Fácil de editar:** basta alterar textos, imagens, links `.apk` e blocos de atualização diretamente no código HTML.
+* 🌟 **Destaque do Aplicativo Principal:** espaço amplo no topo para apresentar o app principal do momento, sua versão atual e o botão de download rápido.
+* 🕹️ **Catálogo de Apps e Jogos:** grade organizada com capa, nome, versão, descrição e download direto de cada `.apk`.
+* 💎 **Barra de Navegação *Liquid Glass*:** menu flutuante com efeito de vidro, brilho dinâmico e rolagem suave para **Início**, **Apps** e **Atualizações**.
+* 📋 **Painel Lateral de Atualizações:** gaveta deslizante com o registro das versões, datas e melhorias lançadas em cada aplicativo.
+* ⚡ **Botões Elásticos Expressivos:** animações interativas de clique e feedback visual ao iniciar o download.
+* 📲 **Responsivo para Celular e Computador:** layout adaptado para telas grandes e smartphones.
 
 ---
 
-## 🗂️ Como atualizar o site com seus apps e jogos
+## 🛠️ Como editar e publicar seus APKs
 
-* **App Principal:** edite o nome, versão, descrição, capa e o link do arquivo `.apk` na seção `.hero`.
-* **Novos Cards:** duplique um bloco `.game-card` dentro de `#apps` para adicionar mais jogos ou aplicativos.
-* **Novas Atualizações:** copie um bloco `.changelog-item` dentro de `#changelogList` e preencha o **nome do app**, **versão**, **data** e **descrição da melhoria**.
+1. Coloque as imagens de capa/ícones e os arquivos `.apk` no repositório (ou atualize os links `src` e `href` no `index.html`).
+2. Edite o **Aplicativo Principal** na seção `.hero` (nome, versão, descrição, imagem e arquivo `.apk`).
+3. Adicione ou personalize os **Cards** dentro de `<main id="apps">` para cada novo jogo ou ferramenta.
+4. Registre as novidades no painel lateral (`#updatesDrawer`) sempre que lançar uma versão nova.
+5. Ative o **GitHub Pages** nas configurações do repositório para colocar o site no ar! 🌐
+
+---
+
+## ⚠️ Aviso sobre instalação de APK
+
+Como os arquivos são distribuídos diretamente em formato `.apk`, ao instalar no Android o sistema pode pedir permissão para instalar aplicativos de fontes conhecidas ou do navegador/gerenciador de arquivos utilizado.
 
 ---
 
 ## 🤖 Créditos
 
-Projeto e estrutura desenvolvidos com apoio do **Gemini** ✨.
+* **Autor / Criador:** Marlony
+* **Apoio na criação e estruturação:** Gerado e aprimorado com o **Gemini** ✨
