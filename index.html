@@ -269,13 +269,17 @@
             position: absolute;
             inset: 0;
             background: radial-gradient(
-                180px circle at var(--glow-x) var(--glow-y),
-                rgba(255, 255, 255, 0.36) 0%,
-                rgba(165, 180, 252, 0.14) 40%,
-                transparent 75%
+                185px circle at var(--glow-x) var(--glow-y),
+                rgba(255, 255, 255, 0.38) 0%,
+                rgba(165, 180, 252, 0.16) 42%,
+                transparent 78%
             );
             pointer-events: none;
-            transition: background 120ms ease-out;
+        }
+
+        /* Pílula de vidro deslizante (usada apenas no Android via media query) */
+        .android-glass-thumb {
+            display: none;
         }
 
         /* CÍRCULOS LIQUID GLAZE (GITHUB E YOUTUBE) */
@@ -283,6 +287,7 @@
             --glow-x: 50%;
             --glow-y: 50%;
             --orbit-angle: 0deg;
+            --orbit-strength: 0;
 
             pointer-events: auto;
             position: relative;
@@ -325,14 +330,15 @@
             inset: 0;
             background: radial-gradient(
                 85px circle at var(--glow-x) var(--glow-y),
-                rgba(255, 255, 255, 0.38) 0%,
-                rgba(165, 180, 252, 0.16) 45%,
-                transparent 80%
+                rgba(255, 255, 255, 0.4) 0%,
+                rgba(165, 180, 252, 0.18) 45%,
+                transparent 82%
             );
             pointer-events: none;
             z-index: 1;
         }
 
+        /* Anel de luz circulante interpolado suavemente (sem surgir ou cortar seco) */
         .social-circle-btn::after {
             content: "";
             position: absolute;
@@ -342,9 +348,9 @@
             background: conic-gradient(
                 from var(--orbit-angle, 0deg),
                 transparent 0deg,
-                rgba(129, 140, 248, 0.15) 60deg,
-                rgba(255, 255, 255, 0.95) 115deg,
-                rgba(56, 189, 248, 0.85) 155deg,
+                rgba(129, 140, 248, 0.18) 55deg,
+                rgba(255, 255, 255, 0.92) 115deg,
+                rgba(56, 189, 248, 0.8) 155deg,
                 transparent 215deg,
                 transparent 360deg
             );
@@ -353,14 +359,9 @@
                 linear-gradient(#000 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
-            opacity: 0;
+            opacity: var(--orbit-strength, 0);
             pointer-events: none;
             z-index: 2;
-            transition: opacity 450ms ease;
-        }
-
-        .social-circle-btn.idle-orbit::after {
-            opacity: 1;
         }
 
         .social-circle-btn svg {
@@ -856,7 +857,7 @@
         @media (max-width: 640px) {
             body {
                 min-height: 145vh;
-                padding-bottom: 125px;
+                padding-bottom: 130px;
             }
 
             .top-brand-bar {
@@ -867,7 +868,6 @@
                 font-size: 1.7rem;
             }
 
-            /* GitHub e YouTube ficam no topo, e a pílula vai para baixo grande e grossa */
             .navbar-wrapper,
             .navbar-wrapper.scrolled {
                 top: auto;
@@ -880,72 +880,103 @@
                 max-width: 420px;
             }
 
-            /* Pílula grande e grossa na parte de baixo com ícones */
+            /* Barra inferior grossa com ícones soltos + pílula de vidro única deslizante */
             .liquid-glass-pill {
                 width: 100%;
-                max-width: 390px;
-                min-height: 70px;
-                padding: 12px 16px;
-                gap: 14px;
-                border-radius: 36px;
+                max-width: 392px;
+                min-height: 72px;
+                padding: 10px 12px;
+                gap: 8px;
+                border-radius: 38px;
+                touch-action: none;
             }
 
-            .liquid-glass-pill:hover {
+            .liquid-glass-pill:hover,
+            .liquid-glass-pill:active,
+            .liquid-glass-pill.idle-pulse {
+                animation: none;
                 width: 100%;
-                max-width: 406px;
-                min-height: 74px;
-                padding: 13px 18px;
-                gap: 16px;
-                transform: translateY(-4px) scale(1.02);
+                max-width: 392px;
+                min-height: 72px;
+                padding: 10px 12px;
+                gap: 8px;
+                transform: none;
             }
 
-            @keyframes boing-inativo-lento {
-                0%, 100% {
-                    width: 100%;
-                    max-width: 390px;
-                    min-height: 70px;
-                    padding: 12px 16px;
-                    gap: 14px;
-                    transform: translateY(0) scale(1);
-                }
-                38% {
-                    width: 100%;
-                    max-width: 408px;
-                    min-height: 74px;
-                    padding: 14px 18px;
-                    gap: 17px;
-                    transform: translateY(-5px) scale(1.03);
-                }
-                54% {
-                    width: 100%;
-                    max-width: 400px;
-                    min-height: 72px;
-                    padding: 13px 17px;
-                    gap: 15px;
-                    transform: translateY(-2px) scale(1.012);
-                }
-                74% {
-                    width: 97%;
-                    max-width: 376px;
-                    min-height: 66px;
-                    padding: 11px 14px;
-                    gap: 12px;
-                    transform: translateY(3px) scale(0.975);
-                }
-                86% {
-                    width: 100%;
-                    max-width: 392px;
-                    min-height: 70px;
-                    padding: 12px 16px;
-                    gap: 14px;
-                    transform: translateY(-1px) scale(1.008);
-                }
+            /* Pílula de vidro única que desliza sobre os ícones ao clicar ou arrastar */
+            .android-glass-thumb {
+                position: absolute;
+                top: 9px;
+                bottom: 9px;
+                left: 0;
+                width: 96px;
+                border-radius: 28px;
+                background: linear-gradient(
+                    155deg,
+                    rgba(255, 255, 255, 0.28) 0%,
+                    rgba(129, 140, 248, 0.24) 50%,
+                    rgba(255, 255, 255, 0.12) 100%
+                );
+                border: 1px solid rgba(255, 255, 255, 0.52);
+                backdrop-filter: blur(18px) saturate(200%);
+                -webkit-backdrop-filter: blur(18px) saturate(200%);
+                box-shadow:
+                    0 10px 24px -6px rgba(0, 0, 0, 0.6),
+                    0 0 18px rgba(129, 140, 248, 0.35),
+                    inset 0 2px 3px rgba(255, 255, 255, 0.8),
+                    inset 0 -2px 4px rgba(0, 0, 0, 0.35);
+                pointer-events: none;
+                z-index: 1;
+                will-change: transform;
+                display: block;
             }
 
-            .pill-nav-btn {
-                height: 48px;
+            .android-glass-thumb.is-green-zone {
+                background: linear-gradient(
+                    155deg,
+                    rgba(167, 243, 208, 0.3) 0%,
+                    rgba(16, 185, 129, 0.28) 50%,
+                    rgba(255, 255, 255, 0.12) 100%
+                );
+                border-color: rgba(110, 231, 183, 0.65);
+                box-shadow:
+                    0 10px 24px -6px rgba(0, 0, 0, 0.6),
+                    0 0 18px rgba(16, 185, 129, 0.4),
+                    inset 0 2px 3px rgba(255, 255, 255, 0.85),
+                    inset 0 -2px 4px rgba(0, 0, 0, 0.35);
+            }
+
+            /* Ícones soltos sem caixinha própria no Android */
+            .pill-nav-btn,
+            .pill-nav-btn:hover,
+            .pill-nav-btn:active,
+            .pill-nav-btn.is-current,
+            .pill-nav-btn.btn-green,
+            .pill-nav-btn.btn-green:hover,
+            .pill-nav-btn.btn-green.is-current {
+                position: relative;
+                z-index: 2;
+                flex: 1;
+                height: 52px;
                 padding: 0;
-                border-radius: 24px;
+                background: transparent;
+                border: none;
+                box-shadow: none;
+                border-radius: 26px;
+                color: #94a3b8;
+                transform: none;
+            }
+
+            .pill-nav-btn.is-current {
+                color: #ffffff;
+            }
+
+            .pill-nav-btn.btn-green {
+                color: #6ee7b7;
+            }
+
+            .pill-nav-btn.btn-green.is-current {
+                color: #ffffff;
             }
 
             .btn-label {
@@ -954,8 +985,14 @@
 
             .nav-icon {
                 display: block;
-                width: 25px;
-                height: 25px;
+                width: 26px;
+                height: 26px;
+                filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+                transition: transform 320ms cubic-bezier(0.22, 1.85, 0.36, 0.9);
+            }
+
+            .pill-nav-btn.is-current .nav-icon {
+                transform: scale(1.12);
             }
 
             /* Círculos GitHub e YouTube posicionados no topo do Android */
@@ -1028,6 +1065,8 @@
     <div class="navbar-wrapper" id="navbarWrapper">
         <div class="nav-cluster">
             <nav class="liquid-glass-pill" id="liquidGlassPill" aria-label="Navegação principal">
+                <span class="android-glass-thumb" id="androidGlassThumb" aria-hidden="true"></span>
+
                 <button type="button" class="pill-nav-btn is-current" id="btnInicio" aria-label="Início" title="Início">
                     <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M12 3L3 10.5V21H9.5V14.5H14.5V21H21V10.5L12 3Z"/>
@@ -1213,72 +1252,101 @@
             }, 400);
         }, 4000);
 
-        // 3. PÍLULA LIQUID GLAZE + CÍRCULOS GITHUB & YOUTUBE + LUZ GIRATÓRIA NA INATIVIDADE
+        // 3. LUZ SUAVE SEM CORTE SECO + PÍLULA DESLIZANTE COM BOING NO ANDROID
         const navbarWrapper = document.getElementById('navbarWrapper');
         const pill = document.getElementById('liquidGlassPill');
+        const androidThumb = document.getElementById('androidGlassThumb');
         const socialCircles = [
             document.getElementById('githubCircleBtn'),
             document.getElementById('youtubeCircleBtn')
         ];
-        const btnInicio = document.getElementById('btnInicio');
-        const btnApps = document.getElementById('btnApps');
-        const btnAtualizacoes = document.getElementById('btnAtualizacoes');
+        const navButtons = [
+            document.getElementById('btnInicio'),
+            document.getElementById('btnApps'),
+            document.getElementById('btnAtualizacoes')
+        ];
+        const [btnInicio, btnApps, btnAtualizacoes] = navButtons;
         const appsSection = document.getElementById('apps');
 
         let tempoInativoTimer = null;
-        let brilhoInativoTimer = null;
-        let glowAngulo = 0;
-        let orbitGraus = 0;
+        let estaInativo = false;
 
-        function atualizarBrilhoPorScroll() {
+        // Estado interpolado suavemente (sem salto seco ao entrar ou sair da inatividade)
+        let atualGlowX = 50;
+        let atualGlowY = 50;
+        let alvoGlowX = 50;
+        let alvoGlowY = 50;
+        let atualOrbitStrength = 0;
+        let alvoOrbitStrength = 0;
+        let orbitAngulo = 0;
+        let idleFase = 0;
+
+        function calcularBrilhoPorScroll() {
             const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
             const progresso = Math.min(1, Math.max(0, window.scrollY / maxScroll));
-            const glowX = 18 + progresso * 64;
-            const glowY = 25 + Math.sin(progresso * Math.PI) * 45;
+            return {
+                x: 18 + progresso * 64,
+                y: 25 + Math.sin(progresso * Math.PI) * 45
+            };
+        }
 
-            pill.style.setProperty('--glow-x', `${glowX}%`);
-            pill.style.setProperty('--glow-y', `${glowY}%`);
-
-            socialCircles.forEach(circle => {
-                circle.style.setProperty('--glow-x', `${glowX}%`);
-                circle.style.setProperty('--glow-y', `${glowY}%`);
-            });
-
+        function atualizarScrollNavbar() {
             navbarWrapper.classList.toggle('scrolled', window.scrollY > 24);
+            if (!estaInativo) {
+                const pos = calcularBrilhoPorScroll();
+                alvoGlowX = pos.x;
+                alvoGlowY = pos.y;
+            }
+        }
+
+        function entrarInatividade() {
+            estaInativo = true;
+            alvoOrbitStrength = 1;
+            if (window.innerWidth > 640) {
+                pill.classList.add('idle-pulse');
+            }
         }
 
         function resetarInatividade() {
+            estaInativo = false;
+            alvoOrbitStrength = 0;
             pill.classList.remove('idle-pulse');
-            socialCircles.forEach(circle => circle.classList.remove('idle-orbit'));
 
-            clearInterval(brilhoInativoTimer);
-            brilhoInativoTimer = null;
+            const pos = calcularBrilhoPorScroll();
+            alvoGlowX = pos.x;
+            alvoGlowY = pos.y;
 
             clearTimeout(tempoInativoTimer);
-            tempoInativoTimer = setTimeout(iniciarAnimacaoInatividade, 5000);
+            tempoInativoTimer = setTimeout(entrarInatividade, 5000);
         }
 
-        function iniciarAnimacaoInatividade() {
-            pill.classList.add('idle-pulse');
-            socialCircles.forEach(circle => circle.classList.add('idle-orbit'));
-
-            if (!brilhoInativoTimer) {
-                brilhoInativoTimer = setInterval(() => {
-                    glowAngulo += 0.025;
-                    orbitGraus = (orbitGraus + 3.2) % 360;
-
-                    const x = 50 + Math.cos(glowAngulo) * 35;
-                    const y = 50 + Math.sin(glowAngulo) * 30;
-                    pill.style.setProperty('--glow-x', `${x}%`);
-                    pill.style.setProperty('--glow-y', `${y}%`);
-
-                    socialCircles.forEach(circle => {
-                        circle.style.setProperty('--orbit-angle', `${orbitGraus}deg`);
-                        circle.style.setProperty('--glow-x', `${50 + Math.cos(glowAngulo) * 38}%`);
-                        circle.style.setProperty('--glow-y', `${50 + Math.sin(glowAngulo) * 38}%`);
-                    });
-                }, 35);
+        function animarBrilhoSuave() {
+            if (estaInativo) {
+                idleFase += 0.018;
+                orbitAngulo = (orbitAngulo + 2.4) % 360;
+                alvoGlowX = 50 + Math.cos(idleFase) * 34;
+                alvoGlowY = 50 + Math.sin(idleFase * 1.2) * 28;
             }
+
+            // Interpolação contínua: nunca aparece do nada nem corta seco
+            atualGlowX += (alvoGlowX - atualGlowX) * 0.065;
+            atualGlowY += (alvoGlowY - atualGlowY) * 0.065;
+            atualOrbitStrength += (alvoOrbitStrength - atualOrbitStrength) * 0.055;
+
+            const gx = `${atualGlowX.toFixed(2)}%`;
+            const gy = `${atualGlowY.toFixed(2)}%`;
+
+            pill.style.setProperty('--glow-x', gx);
+            pill.style.setProperty('--glow-y', gy);
+
+            socialCircles.forEach(circle => {
+                circle.style.setProperty('--glow-x', gx);
+                circle.style.setProperty('--glow-y', gy);
+                circle.style.setProperty('--orbit-angle', `${orbitAngulo.toFixed(1)}deg`);
+                circle.style.setProperty('--orbit-strength', atualOrbitStrength.toFixed(3));
+            });
+
+            requestAnimationFrame(animarBrilhoSuave);
         }
 
         ['pointermove', 'pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(evt => {
@@ -1286,31 +1354,147 @@
         });
 
         pill.addEventListener('pointermove', (e) => {
+            if (estaInativo) return;
             const rect = pill.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            pill.style.setProperty('--glow-x', `${x}%`);
-            pill.style.setProperty('--glow-y', `${y}%`);
+            alvoGlowX = ((e.clientX - rect.left) / rect.width) * 100;
+            alvoGlowY = ((e.clientY - rect.top) / rect.height) * 100;
         });
 
         socialCircles.forEach(circle => {
             circle.addEventListener('pointermove', (e) => {
+                if (estaInativo) return;
                 const rect = circle.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-                circle.style.setProperty('--glow-x', `${x}%`);
-                circle.style.setProperty('--glow-y', `${y}%`);
+                alvoGlowX = ((e.clientX - rect.left) / rect.width) * 100;
+                alvoGlowY = ((e.clientY - rect.top) / rect.height) * 100;
             });
 
-            circle.addEventListener('pointerleave', atualizarBrilhoPorScroll);
+            circle.addEventListener('pointerleave', atualizarScrollNavbar);
         });
 
-        pill.addEventListener('pointerleave', atualizarBrilhoPorScroll);
-        window.addEventListener('scroll', atualizarBrilhoPorScroll, { passive: true });
-        atualizarBrilhoPorScroll();
+        pill.addEventListener('pointerleave', atualizarScrollNavbar);
+        window.addEventListener('scroll', atualizarScrollNavbar, { passive: true });
+        atualizarScrollNavbar();
         resetarInatividade();
+        requestAnimationFrame(animarBrilhoSuave);
 
-        // 4. PÁGINA LATERAL DE ATUALIZAÇÕES
+        // 4. PÍLULA DE VIDRO DESLIZANTE COM BOING (SOMENTE NO ANDROID / MOBILE)
+        let thumbX = 0;
+        let thumbTargetX = 0;
+        let thumbVelX = 0;
+        let thumbScaleX = 1;
+        let thumbScaleY = 1;
+        let thumbScaleVel = 0;
+        let arrastandoThumb = false;
+        let indiceAlvoAndroid = 0;
+
+        function isAndroidMobile() {
+            return window.innerWidth <= 640;
+        }
+
+        function obterCentroDoBotao(btn) {
+            const pillRect = pill.getBoundingClientRect();
+            const btnRect = btn.getBoundingClientRect();
+            const thumbWidth = androidThumb.offsetWidth || 96;
+            const centroBtn = (btnRect.left - pillRect.left) + (btnRect.width / 2);
+            return centroBtn - (thumbWidth / 2);
+        }
+
+        function sincronizarThumbComIndice(imediato = false, comBoing = true) {
+            if (!isAndroidMobile()) return;
+            const btnAlvo = navButtons[indiceAlvoAndroid] || btnInicio;
+            thumbTargetX = obterCentroDoBotao(btnAlvo);
+            androidThumb.classList.toggle('is-green-zone', indiceAlvoAndroid === 2);
+
+            if (imediato) {
+                thumbX = thumbTargetX;
+                thumbVelX = 0;
+            } else if (comBoing) {
+                thumbScaleVel += 0.14;
+            }
+        }
+
+        function atualizarFisicaThumb() {
+            if (isAndroidMobile()) {
+                // Mola elástica com boing suave ao encaixar
+                const stiffness = arrastandoThumb ? 0.45 : 0.16;
+                const damping = arrastandoThumb ? 0.72 : 0.76;
+
+                const forceX = (thumbTargetX - thumbX) * stiffness;
+                thumbVelX = (thumbVelX + forceX) * damping;
+                thumbX += thumbVelX;
+
+                const stretch = Math.min(0.16, Math.abs(thumbVelX) * 0.012);
+                const targetScaleX = arrastandoThumb ? 1.08 : (1 + stretch);
+                const targetScaleY = arrastandoThumb ? 0.94 : (1 - stretch * 0.55);
+
+                const forceScaleX = (targetScaleX - thumbScaleX) * 0.22;
+                const forceScaleY = (targetScaleY - thumbScaleY) * 0.22;
+                thumbScaleVel = (thumbScaleVel + forceScaleX) * 0.72;
+                thumbScaleX += thumbScaleVel;
+                thumbScaleY += (targetScaleY - thumbScaleY) * 0.25;
+
+                androidThumb.style.transform = `translate3d(${thumbX.toFixed(2)}px, 0, 0) scale(${thumbScaleX.toFixed(3)}, ${thumbScaleY.toFixed(3)})`;
+            }
+
+            requestAnimationFrame(atualizarFisicaThumb);
+        }
+
+        function encontrarBotaoMaisProximo(clientX) {
+            let melhorIdx = 0;
+            let menorDistancia = Infinity;
+
+            navButtons.forEach((btn, idx) => {
+                const r = btn.getBoundingClientRect();
+                const centro = r.left + r.width / 2;
+                const dist = Math.abs(clientX - centro);
+                if (dist < menorDistancia) {
+                    menorDistancia = dist;
+                    melhorIdx = idx;
+                }
+            });
+
+            return melhorIdx;
+        }
+
+        pill.addEventListener('pointerdown', (e) => {
+            if (!isAndroidMobile()) return;
+            arrastandoThumb = true;
+            pill.setPointerCapture(e.pointerId);
+
+            const pillRect = pill.getBoundingClientRect();
+            const thumbWidth = androidThumb.offsetWidth || 96;
+            const minX = 8;
+            const maxX = Math.max(minX, pillRect.width - thumbWidth - 8);
+            const rawX = (e.clientX - pillRect.left) - (thumbWidth / 2);
+            thumbTargetX = Math.min(maxX, Math.max(minX, rawX));
+        });
+
+        pill.addEventListener('pointermove', (e) => {
+            if (!isAndroidMobile() || !arrastandoThumb) return;
+            const pillRect = pill.getBoundingClientRect();
+            const thumbWidth = androidThumb.offsetWidth || 96;
+            const minX = 8;
+            const maxX = Math.max(minX, pillRect.width - thumbWidth - 8);
+            const rawX = (e.clientX - pillRect.left) - (thumbWidth / 2);
+            thumbTargetX = Math.min(maxX, Math.max(minX, rawX));
+            androidThumb.classList.toggle('is-green-zone', encontrarBotaoMaisProximo(e.clientX) === 2);
+        });
+
+        function finalizarArrasteThumb(e) {
+            if (!isAndroidMobile() || !arrastandoThumb) return;
+            arrastandoThumb = false;
+            if (pill.hasPointerCapture(e.pointerId)) {
+                pill.releasePointerCapture(e.pointerId);
+            }
+
+            const idxEscolhido = encontrarBotaoMaisProximo(e.clientX);
+            executarAcaoBotao(idxEscolhido);
+        }
+
+        pill.addEventListener('pointerup', finalizarArrasteThumb);
+        pill.addEventListener('pointercancel', finalizarArrasteThumb);
+
+        // 5. PÁGINA LATERAL DE ATUALIZAÇÕES E NAVEGAÇÃO
         const updatesDrawer = document.getElementById('updatesDrawer');
         const drawerBackdrop = document.getElementById('drawerBackdrop');
         const closeDrawerBtn = document.getElementById('closeDrawerBtn');
@@ -1329,26 +1513,40 @@
             btnAtualizacoes.classList.remove('is-current');
         }
 
-        btnInicio.addEventListener('click', () => {
-            fecharAtualizacoes();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            btnInicio.classList.add('is-current');
-            btnApps.classList.remove('is-current');
-        });
+        function executarAcaoBotao(idx) {
+            indiceAlvoAndroid = idx;
+            sincronizarThumbComIndice(false, true);
 
-        btnApps.addEventListener('click', () => {
-            fecharAtualizacoes();
-            const topoApps = appsSection.getBoundingClientRect().top + window.scrollY - 95;
-            window.scrollTo({ top: topoApps, behavior: 'smooth' });
-            btnApps.classList.add('is-current');
-            btnInicio.classList.remove('is-current');
-        });
+            if (idx === 0) {
+                fecharAtualizacoes();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                btnInicio.classList.add('is-current');
+                btnApps.classList.remove('is-current');
+            } else if (idx === 1) {
+                fecharAtualizacoes();
+                const topoApps = appsSection.getBoundingClientRect().top + window.scrollY - 95;
+                window.scrollTo({ top: topoApps, behavior: 'smooth' });
+                btnApps.classList.add('is-current');
+                btnInicio.classList.remove('is-current');
+            } else if (idx === 2) {
+                abrirAtualizacoes();
+            }
+        }
 
-        btnAtualizacoes.addEventListener('click', abrirAtualizacoes);
+        btnInicio.addEventListener('click', () => executarAcaoBotao(0));
+        btnApps.addEventListener('click', () => executarAcaoBotao(1));
+        btnAtualizacoes.addEventListener('click', () => executarAcaoBotao(2));
         closeDrawerBtn.addEventListener('click', fecharAtualizacoes);
         drawerBackdrop.addEventListener('click', fecharAtualizacoes);
 
-        // 5. BOTÕES ELÁSTICOS DE DOWNLOAD (MATERIAL 3 EXPRESSIVE)
+        window.addEventListener('resize', () => {
+            sincronizarThumbComIndice(true, false);
+        });
+
+        setTimeout(() => sincronizarThumbComIndice(true, false), 50);
+        requestAnimationFrame(atualizarFisicaThumb);
+
+        // 6. BOTÕES ELÁSTICOS DE DOWNLOAD (MATERIAL 3 EXPRESSIVE)
         document.querySelectorAll('.m3-elastic-btn').forEach(btn => {
             const btnText = btn.querySelector('.btn-text');
             const defaultText = btn.dataset.textDefault || 'Baixar';
