@@ -140,7 +140,7 @@
         }
 
         /* ===================================================
-           BARRA EM PÍLULA LIQUID CLAY (COM VAI-E-VEM E AFUNDAR)
+           BARRA LIQUID GLAZE + CÍRCULO GITHUB AO LADO (COM BOING)
            =================================================== */
         .navbar-wrapper {
             position: fixed;
@@ -149,6 +149,7 @@
             width: 100%;
             display: flex;
             justify-content: center;
+            align-items: center;
             z-index: 1000;
             padding: 0 20px;
             pointer-events: none;
@@ -157,6 +158,15 @@
 
         .navbar-wrapper.scrolled {
             top: 16px;
+        }
+
+        .nav-cluster {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            max-width: 96vw;
+            pointer-events: none;
         }
 
         .liquid-glass-pill {
@@ -170,8 +180,8 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            width: 440px;
-            max-width: 95vw;
+            width: 430px;
+            max-width: calc(95vw - 64px);
             padding: 10px 18px;
 
             border-radius: 9999px;
@@ -193,19 +203,19 @@
 
             will-change: transform, width, padding, gap, box-shadow;
             transition:
-                width 700ms cubic-bezier(0.34, 1.45, 0.64, 1),
-                padding 700ms cubic-bezier(0.34, 1.45, 0.64, 1),
-                gap 700ms cubic-bezier(0.34, 1.45, 0.64, 1),
-                transform 650ms cubic-bezier(0.34, 1.5, 0.64, 1),
+                width 780ms cubic-bezier(0.22, 1.75, 0.36, 0.92),
+                padding 780ms cubic-bezier(0.22, 1.75, 0.36, 0.92),
+                gap 780ms cubic-bezier(0.22, 1.75, 0.36, 0.92),
+                transform 720ms cubic-bezier(0.22, 1.75, 0.36, 0.92),
                 box-shadow 400ms ease;
         }
 
-        /* Vai um pouquinho para frente/cima e expande ao passar o mouse */
+        /* Boing ao expandir no hover */
         .liquid-glass-pill:hover {
-            width: 510px;
+            width: 495px;
             padding: 12px 24px;
             gap: 16px;
-            transform: translateY(-4px) scale(1.03);
+            transform: translateY(-4px) scale(1.035);
             box-shadow:
                 0 26px 50px -10px rgba(0, 0, 0, 0.75),
                 0 12px 28px -4px rgba(99, 102, 241, 0.45),
@@ -213,35 +223,47 @@
                 inset 0 -3px 7px rgba(0, 0, 0, 0.5);
         }
 
-        /* Diminui e afunda um pouquinho para baixo ao pressionar e depois volta */
+        /* Boing ao diminuir/afundar e voltar ao soltar */
         .liquid-glass-pill:active {
-            transform: translateY(5px) scaleX(0.96) scaleY(0.9);
-            transition-duration: 220ms;
+            transform: translateY(5px) scaleX(0.95) scaleY(0.89);
+            transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Ciclo lento e espaçado na inatividade: expande, avança de leve e volta */
+        /* Ciclo lento na inatividade com efeito "boing" ao expandir e ao diminuir */
         .liquid-glass-pill.idle-pulse {
-            animation: ciclo-liquid-clay-lento 4800ms cubic-bezier(0.34, 1.35, 0.64, 1) infinite;
+            animation: boing-inativo-lento 5200ms cubic-bezier(0.22, 1.65, 0.36, 0.9) infinite;
         }
 
-        @keyframes ciclo-liquid-clay-lento {
+        @keyframes boing-inativo-lento {
             0%, 100% {
-                width: 440px;
+                width: 430px;
                 padding: 10px 18px;
                 gap: 10px;
                 transform: translateY(0) scale(1);
             }
-            45% {
-                width: 500px;
+            38% {
+                width: 492px;
                 padding: 12px 23px;
                 gap: 15px;
-                transform: translateY(-3px) scale(1.025);
+                transform: translateY(-4px) scale(1.035);
             }
-            72% {
-                width: 432px;
-                padding: 9px 17px;
-                gap: 9px;
-                transform: translateY(2px) scale(0.985);
+            54% {
+                width: 472px;
+                padding: 11px 21px;
+                gap: 13px;
+                transform: translateY(-1px) scale(1.012);
+            }
+            74% {
+                width: 418px;
+                padding: 9px 16px;
+                gap: 8px;
+                transform: translateY(3px) scale(0.975);
+            }
+            86% {
+                width: 438px;
+                padding: 10px 18px;
+                gap: 10px;
+                transform: translateY(-1px) scale(1.008);
             }
         }
 
@@ -257,6 +279,88 @@
             );
             pointer-events: none;
             transition: background 120ms ease-out;
+        }
+
+        /* CÍRCULO GITHUB COM MESMO ESTILO LIQUID GLAZE E BOING */
+        .github-circle-btn {
+            --glow-x: 50%;
+            --glow-y: 50%;
+
+            pointer-events: auto;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+            width: 52px;
+            height: 52px;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #f8fafc;
+
+            background: linear-gradient(
+                145deg,
+                rgba(255, 255, 255, 0.16) 0%,
+                rgba(30, 41, 59, 0.72) 45%,
+                rgba(15, 23, 42, 0.85) 100%
+            );
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(22px) saturate(190%);
+            -webkit-backdrop-filter: blur(22px) saturate(190%);
+
+            box-shadow:
+                0 18px 38px -10px rgba(0, 0, 0, 0.65),
+                0 6px 18px -4px rgba(99, 102, 241, 0.28),
+                inset 0 2px 4px rgba(255, 255, 255, 0.7),
+                inset 0 -3px 6px rgba(0, 0, 0, 0.5);
+
+            will-change: transform, box-shadow;
+            transition:
+                transform 680ms cubic-bezier(0.22, 1.8, 0.36, 0.9),
+                box-shadow 350ms ease,
+                border-color 350ms ease;
+        }
+
+        .github-circle-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                90px circle at var(--glow-x) var(--glow-y),
+                rgba(255, 255, 255, 0.38) 0%,
+                rgba(165, 180, 252, 0.16) 45%,
+                transparent 80%
+            );
+            pointer-events: none;
+        }
+
+        .github-circle-btn svg {
+            position: relative;
+            z-index: 1;
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+            transition: transform 550ms cubic-bezier(0.22, 1.8, 0.36, 0.9);
+        }
+
+        .github-circle-btn:hover {
+            transform: translateY(-4px) scale(1.1);
+            border-color: rgba(255, 255, 255, 0.48);
+            box-shadow:
+                0 24px 44px -10px rgba(0, 0, 0, 0.75),
+                0 10px 24px -4px rgba(99, 102, 241, 0.45),
+                inset 0 2px 5px rgba(255, 255, 255, 0.85),
+                inset 0 -3px 7px rgba(0, 0, 0, 0.5);
+        }
+
+        .github-circle-btn:hover svg {
+            transform: scale(1.08) rotate(-6deg);
+        }
+
+        .github-circle-btn:active {
+            transform: translateY(4px) scale(0.88);
+            transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .pill-nav-btn {
@@ -277,7 +381,7 @@
             white-space: nowrap;
             -webkit-tap-highlight-color: transparent;
             transition:
-                transform 240ms cubic-bezier(0.34, 1.5, 0.64, 1),
+                transform 420ms cubic-bezier(0.22, 1.8, 0.36, 0.9),
                 background 250ms ease,
                 border-color 250ms ease,
                 box-shadow 250ms ease;
@@ -285,11 +389,12 @@
 
         .pill-nav-btn:hover {
             background: rgba(255, 255, 255, 0.16);
-            transform: translateY(-1px);
+            transform: translateY(-2px) scale(1.03);
         }
 
         .pill-nav-btn:active {
-            transform: scale(0.94);
+            transform: scale(0.92);
+            transition-duration: 150ms;
         }
 
         .pill-nav-btn.is-current {
@@ -726,48 +831,76 @@
                 top: 12px;
             }
 
+            .nav-cluster {
+                gap: 8px;
+            }
+
             .liquid-glass-pill {
-                width: 96vw;
-                max-width: 390px;
+                width: calc(95vw - 56px);
+                max-width: 330px;
                 padding: 8px 10px;
-                gap: 6px;
+                gap: 5px;
             }
 
             .liquid-glass-pill:hover {
-                width: 98vw;
-                max-width: 410px;
+                width: calc(97vw - 56px);
+                max-width: 350px;
                 padding: 9px 12px;
-                gap: 8px;
+                gap: 7px;
                 transform: translateY(-3px) scale(1.02);
             }
 
-            @keyframes ciclo-liquid-clay-lento {
+            @keyframes boing-inativo-lento {
                 0%, 100% {
-                    width: 96vw;
-                    max-width: 390px;
+                    width: calc(95vw - 56px);
+                    max-width: 330px;
                     padding: 8px 10px;
-                    gap: 6px;
+                    gap: 5px;
                     transform: translateY(0) scale(1);
                 }
-                45% {
-                    width: 98vw;
-                    max-width: 410px;
+                38% {
+                    width: calc(97vw - 56px);
+                    max-width: 350px;
                     padding: 9px 12px;
-                    gap: 8px;
-                    transform: translateY(-2px) scale(1.02);
+                    gap: 7px;
+                    transform: translateY(-3px) scale(1.025);
                 }
-                72% {
-                    width: 94vw;
-                    max-width: 375px;
+                54% {
+                    width: calc(96vw - 56px);
+                    max-width: 340px;
+                    padding: 8px 11px;
+                    gap: 6px;
+                    transform: translateY(-1px) scale(1.01);
+                }
+                74% {
+                    width: calc(93vw - 56px);
+                    max-width: 318px;
                     padding: 7px 9px;
+                    gap: 4px;
+                    transform: translateY(2px) scale(0.98);
+                }
+                86% {
+                    width: calc(95vw - 56px);
+                    max-width: 330px;
+                    padding: 8px 10px;
                     gap: 5px;
-                    transform: translateY(2px) scale(0.985);
+                    transform: translateY(-1px) scale(1.005);
                 }
             }
 
+            .github-circle-btn {
+                width: 44px;
+                height: 44px;
+            }
+
+            .github-circle-btn svg {
+                width: 20px;
+                height: 20px;
+            }
+
             .pill-nav-btn {
-                padding: 8px 8px;
-                font-size: 0.78rem;
+                padding: 8px 7px;
+                font-size: 0.74rem;
             }
 
             .hero {
@@ -815,13 +948,30 @@
         <div class="brand-title" id="brandTitle">Aplicativos e Jogos</div>
     </div>
 
-    <!-- PÍLULA LIQUID CLAY (COM VAI-E-VEM, AFUNDAR E CICLO LENTO NA INATIVIDADE) -->
+    <!-- PÍLULA LIQUID GLAZE + CÍRCULO GITHUB AO LADO -->
     <div class="navbar-wrapper" id="navbarWrapper">
-        <nav class="liquid-glass-pill" id="liquidGlassPill" aria-label="Navegação principal">
-            <button type="button" class="pill-nav-btn is-current" id="btnInicio">Início</button>
-            <button type="button" class="pill-nav-btn" id="btnApps">Apps</button>
-            <button type="button" class="pill-nav-btn btn-green" id="btnAtualizacoes">Atualizações</button>
-        </nav>
+        <div class="nav-cluster">
+            <nav class="liquid-glass-pill" id="liquidGlassPill" aria-label="Navegação principal">
+                <button type="button" class="pill-nav-btn is-current" id="btnInicio">Início</button>
+                <button type="button" class="pill-nav-btn" id="btnApps">Apps</button>
+                <button type="button" class="pill-nav-btn btn-green" id="btnAtualizacoes">Atualizações</button>
+            </nav>
+
+            <!-- TROQUE O LINK ABAIXO PELO LINK DO SEU GITHUB -->
+            <a
+                href="https://github.com/seu-usuario/seu-repositorio"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="github-circle-btn"
+                id="githubCircleBtn"
+                aria-label="Abrir página no GitHub"
+                title="GitHub"
+            >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+            </a>
+        </div>
     </div>
 
     <!-- DESTAQUE DO APLICATIVO PRINCIPAL -->
@@ -955,9 +1105,10 @@
             }, 400);
         }, 4000);
 
-        // 3. PÍLULA LIQUID CLAY + CICLO LENTO NA INATIVIDADE
+        // 3. PÍLULA LIQUID GLAZE + CÍRCULO GITHUB + BOING NA INATIVIDADE
         const navbarWrapper = document.getElementById('navbarWrapper');
         const pill = document.getElementById('liquidGlassPill');
+        const githubCircleBtn = document.getElementById('githubCircleBtn');
         const btnInicio = document.getElementById('btnInicio');
         const btnApps = document.getElementById('btnApps');
         const btnAtualizacoes = document.getElementById('btnAtualizacoes');
@@ -975,6 +1126,8 @@
 
             pill.style.setProperty('--glow-x', `${glowX}%`);
             pill.style.setProperty('--glow-y', `${glowY}%`);
+            githubCircleBtn.style.setProperty('--glow-x', `${glowX}%`);
+            githubCircleBtn.style.setProperty('--glow-y', `${glowY}%`);
 
             navbarWrapper.classList.toggle('scrolled', window.scrollY > 24);
         }
@@ -1014,7 +1167,16 @@
             pill.style.setProperty('--glow-y', `${y}%`);
         });
 
+        githubCircleBtn.addEventListener('pointermove', (e) => {
+            const rect = githubCircleBtn.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            githubCircleBtn.style.setProperty('--glow-x', `${x}%`);
+            githubCircleBtn.style.setProperty('--glow-y', `${y}%`);
+        });
+
         pill.addEventListener('pointerleave', atualizarBrilhoPorScroll);
+        githubCircleBtn.addEventListener('pointerleave', atualizarBrilhoPorScroll);
         window.addEventListener('scroll', atualizarBrilhoPorScroll, { passive: true });
         atualizarBrilhoPorScroll();
         resetarInatividade();
