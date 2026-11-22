@@ -46,14 +46,14 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 90px;
-            background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 40%, transparent 100%);
+            height: 100px;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.96) 0%, rgba(15, 23, 42, 0.65) 45%, transparent 100%);
             pointer-events: none;
             z-index: 900;
         }
 
         /* ===================================================
-           TÍTULO SUPERIOR EM PÍLULA LIQUID GLASS (EXPANSÃO SUAVE)
+           TÍTULO SUPERIOR COM ESTRELAS DE 4 PONTAS E FUNDO LIMPO
            =================================================== */
         .top-brand-bar {
             position: relative;
@@ -69,8 +69,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: min(560px, 95vw);
-            height: 96px;
+            width: min(520px, 94vw);
+            height: 90px;
             pointer-events: none;
             overflow: visible;
         }
@@ -95,76 +95,14 @@
             }
         }
 
-        .title-liquid-pill {
-            --glow-x: 50%;
-            --glow-y: 50%;
-
-            position: relative;
-            z-index: 1;
-            overflow: hidden;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 14px 36px;
-            max-width: 94vw;
-
-            border-radius: 9999px;
-            background: linear-gradient(
-                145deg,
-                rgba(255, 255, 255, 0.16) 0%,
-                rgba(30, 41, 59, 0.72) 45%,
-                rgba(15, 23, 42, 0.85) 100%
-            );
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(22px) saturate(190%);
-            -webkit-backdrop-filter: blur(22px) saturate(190%);
-
-            box-shadow:
-                0 18px 38px -10px rgba(0, 0, 0, 0.65),
-                0 6px 18px -4px rgba(99, 102, 241, 0.28),
-                inset 0 2px 4px rgba(255, 255, 255, 0.7),
-                inset 0 -3px 6px rgba(0, 0, 0, 0.5);
-
-            will-change: transform, padding, box-shadow;
-            transition:
-                padding 680ms cubic-bezier(0.22, 1.45, 0.36, 0.95),
-                transform 680ms cubic-bezier(0.22, 1.45, 0.36, 0.95),
-                box-shadow 400ms ease;
-        }
-
-        .title-liquid-pill::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(
-                170px circle at var(--glow-x) var(--glow-y),
-                rgba(255, 255, 255, 0.34) 0%,
-                rgba(165, 180, 252, 0.14) 45%,
-                transparent 80%
-            );
-            pointer-events: none;
-        }
-
-        /* Expansão suave quando o título muda para "Aplicativos e Jogos" */
-        .title-liquid-pill.expandido-suave {
-            padding: 15px 44px;
-            transform: scale(1.03);
-            box-shadow:
-                0 22px 46px -10px rgba(0, 0, 0, 0.72),
-                0 10px 26px -4px rgba(99, 102, 241, 0.38),
-                inset 0 2px 5px rgba(255, 255, 255, 0.78),
-                inset 0 -3px 7px rgba(0, 0, 0, 0.5);
-        }
-
         .brand-title {
             position: relative;
             z-index: 1;
             display: inline-block;
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             font-weight: 900;
             letter-spacing: 0.5px;
             text-align: center;
-            white-space: nowrap;
             text-shadow: 0 4px 22px rgba(99, 102, 241, 0.45);
 
             background: linear-gradient(
@@ -189,7 +127,7 @@
 
         .brand-title.trocando {
             opacity: 0;
-            transform: translateY(-6px) scale(0.96);
+            transform: translateY(-8px) scale(0.95);
         }
 
         @keyframes fluxo-colorido-continuo {
@@ -206,7 +144,7 @@
            =================================================== */
         .navbar-wrapper {
             position: fixed;
-            top: 118px;
+            top: 104px;
             left: 0;
             width: 100%;
             display: flex;
@@ -474,7 +412,7 @@
             outline: none;
             user-select: none;
             white-space: nowrap;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
@@ -488,8 +426,8 @@
 
         .nav-icon {
             display: none;
-            width: 18px;
-            height: 18px;
+            width: 24px;
+            height: 24px;
             fill: currentColor;
             flex-shrink: 0;
         }
@@ -530,10 +468,10 @@
         }
 
         /* ===================================================
-           DESTAQUE DO APLICATIVO PRINCIPAL
+           DESTAQUE DO APLICATIVO PRINCIPAL (FUNDO INTEGRADO)
            =================================================== */
         .hero {
-            padding: 132px 20px 70px;
+            padding: 124px 20px 70px;
             background: #0f172a;
         }
 
@@ -888,7 +826,7 @@
         }
 
         /* ===================================================
-           ADAPTAÇÃO RESPONSIVA TABLET & ANDROID (MOBILE)
+           ADAPTAÇÃO RESPONSIVA TABLET E CELULAR (ANDROID)
            =================================================== */
         @media (max-width: 768px) {
             .featured-showcase {
@@ -915,43 +853,125 @@
             }
         }
 
-        /* VERSÃO ANDROID: INÍCIO / APPS / ATUALIZAÇÕES EMBAIXO COM ÍCONES; GITHUB E YOUTUBE NO MESMO LUGAR ACIMA */
         @media (max-width: 640px) {
             body {
                 min-height: 145vh;
-                padding-bottom: 112px;
+                padding-bottom: 125px;
             }
 
             .top-brand-bar {
-                padding: 26px 16px 10px;
-            }
-
-            .title-liquid-pill {
-                padding: 11px 24px;
-            }
-
-            .title-liquid-pill.expandido-suave {
-                padding: 12px 30px;
+                padding: 28px 16px 12px;
             }
 
             .brand-title {
-                font-size: 1.5rem;
+                font-size: 1.7rem;
             }
 
-            /* Círculos GitHub e YouTube permanecem no topo com as animações da versão Android */
+            /* GitHub e YouTube ficam no topo, e a pílula vai para baixo grande e grossa */
             .navbar-wrapper,
             .navbar-wrapper.scrolled {
-                top: 84px;
+                top: auto;
+                bottom: 20px;
                 padding: 0 14px;
             }
 
             .nav-cluster {
-                gap: 14px;
+                width: 100%;
+                max-width: 420px;
             }
 
+            /* Pílula grande e grossa na parte de baixo com ícones */
+            .liquid-glass-pill {
+                width: 100%;
+                max-width: 390px;
+                min-height: 70px;
+                padding: 12px 16px;
+                gap: 14px;
+                border-radius: 36px;
+            }
+
+            .liquid-glass-pill:hover {
+                width: 100%;
+                max-width: 406px;
+                min-height: 74px;
+                padding: 13px 18px;
+                gap: 16px;
+                transform: translateY(-4px) scale(1.02);
+            }
+
+            @keyframes boing-inativo-lento {
+                0%, 100% {
+                    width: 100%;
+                    max-width: 390px;
+                    min-height: 70px;
+                    padding: 12px 16px;
+                    gap: 14px;
+                    transform: translateY(0) scale(1);
+                }
+                38% {
+                    width: 100%;
+                    max-width: 408px;
+                    min-height: 74px;
+                    padding: 14px 18px;
+                    gap: 17px;
+                    transform: translateY(-5px) scale(1.03);
+                }
+                54% {
+                    width: 100%;
+                    max-width: 400px;
+                    min-height: 72px;
+                    padding: 13px 17px;
+                    gap: 15px;
+                    transform: translateY(-2px) scale(1.012);
+                }
+                74% {
+                    width: 97%;
+                    max-width: 376px;
+                    min-height: 66px;
+                    padding: 11px 14px;
+                    gap: 12px;
+                    transform: translateY(3px) scale(0.975);
+                }
+                86% {
+                    width: 100%;
+                    max-width: 392px;
+                    min-height: 70px;
+                    padding: 12px 16px;
+                    gap: 14px;
+                    transform: translateY(-1px) scale(1.008);
+                }
+            }
+
+            .pill-nav-btn {
+                height: 48px;
+                padding: 0;
+                border-radius: 24px;
+            }
+
+            .btn-label {
+                display: none;
+            }
+
+            .nav-icon {
+                display: block;
+                width: 25px;
+                height: 25px;
+            }
+
+            /* Círculos GitHub e YouTube posicionados no topo do Android */
             .social-circle-btn {
+                position: fixed;
+                top: 84px;
                 width: 46px;
                 height: 46px;
+            }
+
+            #githubCircleBtn {
+                left: calc(50% - 54px);
+            }
+
+            #youtubeCircleBtn {
+                left: calc(50% + 8px);
             }
 
             .social-circle-btn svg {
@@ -959,74 +979,8 @@
                 height: 21px;
             }
 
-            /* Pílula de navegação vai para a parte inferior no Android com ícones */
-            .liquid-glass-pill {
-                position: fixed;
-                bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 255px;
-                max-width: 82vw;
-                padding: 8px 12px;
-                gap: 8px;
-                z-index: 1050;
-            }
-
-            .liquid-glass-pill:hover {
-                width: 278px;
-                padding: 9px 14px;
-                gap: 11px;
-                transform: translateX(-50%) translateY(-3px) scale(1.02);
-            }
-
-            .liquid-glass-pill:active {
-                transform: translateX(-50%) translateY(3px) scaleX(0.95) scaleY(0.9);
-            }
-
-            @keyframes boing-inativo-lento {
-                0%, 100% {
-                    width: 255px;
-                    padding: 8px 12px;
-                    gap: 8px;
-                    transform: translateX(-50%) translateY(0) scale(1);
-                }
-                38% {
-                    width: 278px;
-                    padding: 9px 14px;
-                    gap: 11px;
-                    transform: translateX(-50%) translateY(-3px) scale(1.025);
-                }
-                54% {
-                    width: 268px;
-                    padding: 8px 13px;
-                    gap: 10px;
-                    transform: translateX(-50%) translateY(-1px) scale(1.01);
-                }
-                74% {
-                    width: 244px;
-                    padding: 7px 11px;
-                    gap: 7px;
-                    transform: translateX(-50%) translateY(2px) scale(0.98);
-                }
-                86% {
-                    width: 258px;
-                    padding: 8px 12px;
-                    gap: 8px;
-                    transform: translateX(-50%) translateY(-1px) scale(1.005);
-                }
-            }
-
-            .pill-nav-btn {
-                padding: 10px 8px;
-                font-size: 0.72rem;
-            }
-
-            .nav-icon {
-                display: inline-block;
-            }
-
             .hero {
-                padding: 86px 14px 52px;
+                padding: 78px 14px 56px;
             }
 
             .container {
@@ -1064,35 +1018,35 @@
 </head>
 <body id="inicio">
 
-    <!-- TÍTULO SUPERIOR EM PÍLULA LIQUID GLASS COM ESTRELAS DE 4 PONTAS ATRÁS -->
+    <!-- TÍTULO SUPERIOR COM ESTRELAS DE 4 PONTAS ATRÁS -->
     <div class="top-brand-bar">
         <div class="stars-container" id="starsContainer"></div>
-        <div class="title-liquid-pill expandido-suave" id="titleLiquidPill">
-            <div class="brand-title" id="brandTitle">Aplicativos e Jogos</div>
-        </div>
+        <div class="brand-title" id="brandTitle">Aplicativos e Jogos</div>
     </div>
 
-    <!-- CÍRCULOS GITHUB & YOUTUBE + PÍLULA LIQUID GLAZE -->
+    <!-- PÍLULA LIQUID GLAZE + CÍRCULOS GITHUB E YOUTUBE -->
     <div class="navbar-wrapper" id="navbarWrapper">
         <div class="nav-cluster">
             <nav class="liquid-glass-pill" id="liquidGlassPill" aria-label="Navegação principal">
-                <button type="button" class="pill-nav-btn is-current" id="btnInicio" aria-label="Início">
+                <button type="button" class="pill-nav-btn is-current" id="btnInicio" aria-label="Início" title="Início">
                     <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12 3l9 8h-3v9h-5v-6h-2v6H6v-9H3l9-8z"/>
+                        <path d="M12 3L3 10.5V21H9.5V14.5H14.5V21H21V10.5L12 3Z"/>
                     </svg>
-                    <span>Início</span>
+                    <span class="btn-label">Início</span>
                 </button>
-                <button type="button" class="pill-nav-btn" id="btnApps" aria-label="Apps">
+
+                <button type="button" class="pill-nav-btn" id="btnApps" aria-label="Apps" title="Apps">
                     <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M4 4h4v4H4V4zm6 0h4v4h-4V4zm6 0h4v4h-4V4zM4 10h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4zM4 16h4v4H4v-4zm6 0h4v4h-4v-4zm6 0h4v4h-4v-4z"/>
+                        <path d="M4 4H9V9H4V4ZM11 4H16V9H11V4ZM18 4H21V9H18V4ZM4 11H9V16H4V11ZM11 11H16V16H11V11ZM18 11H21V16H18V11ZM4 18H9V21H4V18ZM11 18H16V21H11V18ZM18 18H21V21H18V18Z"/>
                     </svg>
-                    <span>Apps</span>
+                    <span class="btn-label">Apps</span>
                 </button>
-                <button type="button" class="pill-nav-btn btn-green" id="btnAtualizacoes" aria-label="Atualizações">
+
+                <button type="button" class="pill-nav-btn btn-green" id="btnAtualizacoes" aria-label="Atualizações" title="Atualizações">
                     <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0 0 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 0 0 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
+                        <path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
                     </svg>
-                    <span>Atualizações</span>
+                    <span class="btn-label">Atualizações</span>
                 </button>
             </nav>
 
@@ -1241,8 +1195,7 @@
             starsContainer.appendChild(svg);
         }
 
-        // 2. ALTERNÂNCIA SUAVE ENTRE "Aplicativos e Jogos" E "Marlony" COM EXPANSÃO SUAVE DA PÍLULA
-        const titleLiquidPill = document.getElementById('titleLiquidPill');
+        // 2. ALTERNÂNCIA SUAVE ENTRE "Aplicativos e Jogos" E "Marlony"
         const brandTitle = document.getElementById('brandTitle');
         const titulosRotativos = [
             'Aplicativos e Jogos',
@@ -1255,15 +1208,7 @@
 
             setTimeout(() => {
                 indiceTitulo = (indiceTitulo + 1) % titulosRotativos.length;
-                const proximoTitulo = titulosRotativos[indiceTitulo];
-                brandTitle.textContent = proximoTitulo;
-
-                if (proximoTitulo === 'Aplicativos e Jogos') {
-                    titleLiquidPill.classList.add('expandido-suave');
-                } else {
-                    titleLiquidPill.classList.remove('expandido-suave');
-                }
-
+                brandTitle.textContent = titulosRotativos[indiceTitulo];
                 brandTitle.classList.remove('trocando');
             }, 400);
         }, 4000);
@@ -1293,8 +1238,6 @@
 
             pill.style.setProperty('--glow-x', `${glowX}%`);
             pill.style.setProperty('--glow-y', `${glowY}%`);
-            titleLiquidPill.style.setProperty('--glow-x', `${glowX}%`);
-            titleLiquidPill.style.setProperty('--glow-y', `${glowY}%`);
 
             socialCircles.forEach(circle => {
                 circle.style.setProperty('--glow-x', `${glowX}%`);
@@ -1328,8 +1271,6 @@
                     const y = 50 + Math.sin(glowAngulo) * 30;
                     pill.style.setProperty('--glow-x', `${x}%`);
                     pill.style.setProperty('--glow-y', `${y}%`);
-                    titleLiquidPill.style.setProperty('--glow-x', `${x}%`);
-                    titleLiquidPill.style.setProperty('--glow-y', `${y}%`);
 
                     socialCircles.forEach(circle => {
                         circle.style.setProperty('--orbit-angle', `${orbitGraus}deg`);
@@ -1342,14 +1283,6 @@
 
         ['pointermove', 'pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(evt => {
             window.addEventListener(evt, resetarInatividade, { passive: true });
-        });
-
-        titleLiquidPill.addEventListener('pointermove', (e) => {
-            const rect = titleLiquidPill.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            titleLiquidPill.style.setProperty('--glow-x', `${x}%`);
-            titleLiquidPill.style.setProperty('--glow-y', `${y}%`);
         });
 
         pill.addEventListener('pointermove', (e) => {
@@ -1372,7 +1305,6 @@
             circle.addEventListener('pointerleave', atualizarBrilhoPorScroll);
         });
 
-        titleLiquidPill.addEventListener('pointerleave', atualizarBrilhoPorScroll);
         pill.addEventListener('pointerleave', atualizarBrilhoPorScroll);
         window.addEventListener('scroll', atualizarBrilhoPorScroll, { passive: true });
         atualizarBrilhoPorScroll();
