@@ -25,38 +25,58 @@
         }
 
         /* ===================================================
-           TÍTULO SUPERIOR COM COLORIDO CONTÍNUO E TROCA EM PT-BR
+           TÍTULO SUPERIOR DESTACADO COM COLORIDO CONTÍNUO
            =================================================== */
         .top-brand-bar {
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 28px 20px 10px;
+            padding: 32px 20px 14px;
+        }
+
+        .top-brand-bar::before {
+            content: "";
+            position: absolute;
+            width: min(460px, 88vw);
+            height: 76px;
+            border-radius: 9999px;
+            background: radial-gradient(
+                circle,
+                rgba(99, 102, 241, 0.24) 0%,
+                rgba(16, 185, 129, 0.12) 55%,
+                transparent 78%
+            );
+            filter: blur(18px);
+            pointer-events: none;
         }
 
         .brand-title {
+            position: relative;
+            z-index: 1;
             display: inline-block;
-            font-size: 1.7rem;
-            font-weight: 800;
+            font-size: 2.25rem;
+            font-weight: 900;
             letter-spacing: 0.4px;
             text-align: center;
+            text-shadow: 0 10px 28px rgba(99, 102, 241, 0.28);
 
+            /* Começa e termina na mesma cor (#818cf8) para o ciclo ser contínuo */
             background: linear-gradient(
                 90deg,
                 #818cf8 0%,
-                #38bdf8 22%,
-                #34d399 45%,
-                #f472b6 70%,
-                #fbbf24 88%,
+                #38bdf8 25%,
+                #34d399 50%,
+                #f472b6 75%,
                 #818cf8 100%
             );
-            background-size: 250% 100%;
+            background-size: 200% 100%;
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
 
             will-change: background-position, opacity, transform;
-            animation: fluxo-colorido-texto 7s linear infinite;
+            animation: fluxo-colorido-continuo 6s linear infinite;
             transition:
                 opacity 420ms ease,
                 transform 520ms cubic-bezier(0.34, 1.35, 0.64, 1);
@@ -64,15 +84,15 @@
 
         .brand-title.trocando {
             opacity: 0;
-            transform: translateY(-7px) scale(0.96);
+            transform: translateY(-8px) scale(0.95);
         }
 
-        @keyframes fluxo-colorido-texto {
+        @keyframes fluxo-colorido-continuo {
             0% {
                 background-position: 0% 50%;
             }
             100% {
-                background-position: 250% 50%;
+                background-position: 200% 50%;
             }
         }
 
@@ -81,7 +101,7 @@
            =================================================== */
         .navbar-wrapper {
             position: fixed;
-            top: 82px;
+            top: 98px;
             left: 0;
             width: 100%;
             display: flex;
@@ -204,7 +224,7 @@
            DESTAQUE PRINCIPAL COM APLICATIVO PRINCIPAL GRANDÃO
            =================================================== */
         .hero {
-            padding: 116px 20px 70px;
+            padding: 124px 20px 70px;
             background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
         }
 
@@ -444,7 +464,7 @@
         }
 
         /* ===================================================
-           PAINEL LATERAL DE ATUALIZAÇÕES (VINDO DO LADO)
+           PAINEL LATERAL DE ATUALIZAÇÕES OFICIAIS (DO LADO)
            =================================================== */
         .drawer-backdrop {
             position: fixed;
@@ -513,7 +533,6 @@
             display: flex;
             flex-direction: column;
             gap: 14px;
-            margin-bottom: 24px;
         }
 
         .changelog-item {
@@ -528,7 +547,7 @@
             justify-content: space-between;
             align-items: center;
             gap: 8px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .changelog-app {
@@ -546,53 +565,17 @@
             border-radius: 9999px;
         }
 
+        .changelog-date {
+            display: block;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 8px;
+        }
+
         .changelog-notes {
             color: #cbd5e1;
             font-size: 0.92rem;
             line-height: 1.5;
-        }
-
-        .editor-box {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(129, 140, 248, 0.28);
-            border-radius: 20px;
-            padding: 16px;
-        }
-
-        .editor-box h3 {
-            font-size: 1.05rem;
-            margin-bottom: 12px;
-            color: #e0e7ff;
-        }
-
-        .editor-field {
-            width: 100%;
-            margin-bottom: 10px;
-            padding: 10px 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            background: #0f172a;
-            color: #ffffff;
-            font-size: 0.92rem;
-            outline: none;
-        }
-
-        .editor-field textarea,
-        textarea.editor-field {
-            min-height: 76px;
-            resize: vertical;
-        }
-
-        .save-update-btn {
-            width: 100%;
-            padding: 12px 16px;
-            border-radius: 14px;
-            border: none;
-            background: linear-gradient(135deg, #6366f1, #4338ca);
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
         }
 
         /* ===================================================
@@ -630,15 +613,19 @@
             }
 
             .top-brand-bar {
-                padding: 20px 16px 8px;
+                padding: 22px 16px 10px;
+            }
+
+            .top-brand-bar::before {
+                height: 64px;
             }
 
             .brand-title {
-                font-size: 1.25rem;
+                font-size: 1.65rem;
             }
 
             .navbar-wrapper {
-                top: 64px;
+                top: 82px;
                 padding: 0 10px;
             }
 
@@ -666,7 +653,7 @@
             }
 
             .hero {
-                padding: 108px 14px 56px;
+                padding: 122px 14px 56px;
             }
 
             .container {
@@ -704,7 +691,7 @@
 </head>
 <body id="inicio">
 
-    <!-- TÍTULO SUPERIOR COM COLORIDO CONTÍNUO E ALTERNÂNCIA EM PORTUGUÊS -->
+    <!-- TÍTULO SUPERIOR DESTACADO COM COLORIDO CONTÍNUO -->
     <div class="top-brand-bar">
         <div class="brand-title" id="brandTitle">Aplicativos e Jogos</div>
     </div>
@@ -721,12 +708,17 @@
     <!-- DESTAQUE DO APLICATIVO PRINCIPAL (BEM GRANDÃO) -->
     <section class="hero">
         <div class="featured-showcase">
+            <!-- EDITE AQUI: Foto do aplicativo principal -->
             <img src="https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/app-principal.jpg" alt="Foto do Aplicativo Principal" class="featured-cover" onerror="this.src='https://via.placeholder.com/600x340/334155/ffffff?text=Foto+do+Aplicativo+Principal'">
             <div class="featured-info">
                 <span class="featured-badge">Aplicativo Principal</span>
+                <!-- EDITE AQUI: Nome do aplicativo principal -->
                 <h1 id="mainAppName">Super App do Marlony</h1>
+                <!-- EDITE AQUI: Versão do aplicativo principal -->
                 <div class="version-pill" id="mainAppVersion">Versão 1.0.0</div>
+                <!-- EDITE AQUI: Descrição do aplicativo principal -->
                 <p id="mainAppDesc">Aplicativo principal em destaque para instalar direto no celular com todas as novidades e melhorias recentes.</p>
+                <!-- EDITE AQUI: Nome do arquivo APK principal -->
                 <a href="aplicativo-principal.apk" download class="m3-elastic-btn" data-auto-reset="true" data-text-default="Baixar APK ⚡" data-text-success="Baixando... 📥">
                     <span class="btn-text">Baixar APK ⚡</span>
                 </a>
@@ -739,7 +731,7 @@
         <h2 class="section-title">Meus Aplicativos e Jogos</h2>
         <div class="games-grid">
 
-            <!-- CARD 1 -->
+            <!-- CARD 1: EDITE FOTO, NOME, VERSÃO, DESCRIÇÃO E ARQUIVO .APK -->
             <div class="game-card">
                 <img src="https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/imagem-jogo1.jpg" alt="Foto do Jogo 1" class="game-thumb" onerror="this.src='https://via.placeholder.com/400x200/334155/ffffff?text=Sua+Foto+Aqui'">
                 <h3>Meu Jogo 1</h3>
@@ -750,7 +742,7 @@
                 </a>
             </div>
 
-            <!-- CARD 2 -->
+            <!-- CARD 2: EDITE FOTO, NOME, VERSÃO, DESCRIÇÃO E ARQUIVO .APK -->
             <div class="game-card">
                 <img src="https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/imagem-jogo2.jpg" alt="Foto do Jogo 2" class="game-thumb" onerror="this.src='https://via.placeholder.com/400x200/334155/ffffff?text=Sua+Foto+Aqui'">
                 <h3>Meu Jogo 2</h3>
@@ -761,7 +753,7 @@
                 </a>
             </div>
 
-            <!-- CARD 3 -->
+            <!-- CARD 3: EDITE FOTO, NOME, VERSÃO, DESCRIÇÃO E ARQUIVO .APK -->
             <div class="game-card">
                 <img src="https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/imagem-app1.jpg" alt="Foto do App 3" class="game-thumb" onerror="this.src='https://via.placeholder.com/400x200/334155/ffffff?text=Sua+Foto+Aqui'">
                 <h3>Meu App Útil</h3>
@@ -775,7 +767,15 @@
         </div>
     </main>
 
-    <!-- FUNDO ESCURO E PÁGINA LATERAL DE ATUALIZAÇÕES (VINDO DO LADO) -->
+    <!-- =====================================================================
+         PÁGINA LATERAL DE ATUALIZAÇÕES OFICIAIS
+         PARA ADICIONAR OU ALTERAR MELHORIAS: COPIE UM BLOCO <div class="changelog-item">
+         E MUDE:
+         1. NOME DO APLICATIVO (<span class="changelog-app">)
+         2. VERSÃO (<span class="changelog-ver">)
+         3. DATA (<span class="changelog-date">)
+         4. DESCRIÇÃO DA MELHORIA (<p class="changelog-notes">)
+         ===================================================================== -->
     <div class="drawer-backdrop" id="drawerBackdrop"></div>
     <aside class="updates-drawer" id="updatesDrawer" aria-label="Atualizações dos aplicativos">
         <div class="drawer-header">
@@ -784,29 +784,25 @@
         </div>
 
         <div class="changelog-list" id="changelogList">
+            <!-- ATUALIZAÇÃO 1 (EDITE AQUI) -->
             <div class="changelog-item">
                 <div class="changelog-top">
-                    <span class="changelog-app">Super App do Marlony</span>
-                    <span class="changelog-ver">Versão 1.0.0</span>
+                    <span class="changelog-app">NOME DO APLICATIVO: Super App do Marlony</span>
+                    <span class="changelog-ver">VERSÃO: 1.0.0</span>
                 </div>
-                <p class="changelog-notes">Lançamento inicial do aplicativo principal com instalação direta via APK.</p>
+                <span class="changelog-date">DATA: 22/11/2026</span>
+                <p class="changelog-notes">DESCRIÇÃO: Lançamento inicial do aplicativo principal com instalação direta via APK.</p>
             </div>
-            <div class="changelog-item">
-                <div class="changelog-top">
-                    <span class="changelog-app">Meu Jogo 1</span>
-                    <span class="changelog-ver">Versão 1.2.0</span>
-                </div>
-                <p class="changelog-notes">Melhorias de desempenho no celular e correções gerais.</p>
-            </div>
-        </div>
 
-        <!-- ÁREA RÁPIDA PARA REGISTRAR MELHORIAS QUANDO ATUALIZAR -->
-        <div class="editor-box">
-            <h3>Registrar Nova Melhoria / Versão</h3>
-            <input type="text" id="updateAppName" class="editor-field" placeholder="Nome do jogo ou aplicativo (ex: Meu Jogo 1)">
-            <input type="text" id="updateVersion" class="editor-field" placeholder="Nova versão (ex: Versão 1.3.0)">
-            <textarea id="updateNotes" class="editor-field" placeholder="O que melhorou ou mudou nesta versão?"></textarea>
-            <button type="button" class="save-update-btn" id="saveUpdateBtn">Adicionar Melhoria</button>
+            <!-- ATUALIZAÇÃO 2 (EDITE AQUI) -->
+            <div class="changelog-item">
+                <div class="changelog-top">
+                    <span class="changelog-app">NOME DO APLICATIVO: Meu Jogo 1</span>
+                    <span class="changelog-ver">VERSÃO: 1.2.0</span>
+                </div>
+                <span class="changelog-date">DATA: 20/11/2026</span>
+                <p class="changelog-notes">DESCRIÇÃO: Melhorias de desempenho no celular e correções gerais.</p>
+            </div>
         </div>
     </aside>
 
@@ -898,41 +894,6 @@
         btnAtualizacoes.addEventListener('click', abrirAtualizacoes);
         closeDrawerBtn.addEventListener('click', fecharAtualizacoes);
         drawerBackdrop.addEventListener('click', fecharAtualizacoes);
-
-        // Adicionar nova melhoria / versão na lista lateral
-        const saveUpdateBtn = document.getElementById('saveUpdateBtn');
-        const changelogList = document.getElementById('changelogList');
-        const updateAppName = document.getElementById('updateAppName');
-        const updateVersion = document.getElementById('updateVersion');
-        const updateNotes = document.getElementById('updateNotes');
-
-        saveUpdateBtn.addEventListener('click', () => {
-            const nome = updateAppName.value.trim();
-            const versao = updateVersion.value.trim();
-            const notas = updateNotes.value.trim();
-
-            if (!nome || !versao || !notas) return;
-
-            const item = document.createElement('div');
-            item.className = 'changelog-item';
-            item.innerHTML = `
-                <div class="changelog-top">
-                    <span class="changelog-app"></span>
-                    <span class="changelog-ver"></span>
-                </div>
-                <p class="changelog-notes"></p>
-            `;
-
-            item.querySelector('.changelog-app').textContent = nome;
-            item.querySelector('.changelog-ver').textContent = versao;
-            item.querySelector('.changelog-notes').textContent = notas;
-
-            changelogList.prepend(item);
-
-            updateAppName.value = '';
-            updateVersion.value = '';
-            updateNotes.value = '';
-        });
 
         // Lógica dos botões elásticos de download (com reset automático)
         document.querySelectorAll('.m3-elastic-btn').forEach(btn => {
