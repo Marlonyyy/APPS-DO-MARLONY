@@ -53,7 +53,7 @@
         }
 
         /* ===================================================
-           TÍTULO SUPERIOR FUSÃO 100% SUAVE (SEM LINHAS RETAS)
+           TÍTULO SUPERIOR COM ESTRELAS DE 4 PONTAS E FUNDO LIMPO
            =================================================== */
         .top-brand-bar {
             position: relative;
@@ -64,35 +64,13 @@
             background: transparent;
         }
 
-        /* Névoa de brilho radial completamente orgânica sem bordas ou linhas */
-        .top-brand-bar::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: min(560px, 95vw);
-            height: 110px;
-            border-radius: 50%;
-            background: radial-gradient(
-                ellipse at center,
-                rgba(99, 102, 241, 0.22) 0%,
-                rgba(56, 189, 248, 0.12) 40%,
-                rgba(16, 185, 129, 0.04) 68%,
-                transparent 100%
-            );
-            filter: blur(28px);
-            pointer-events: none;
-        }
-
-        /* Campo de estrelas de 4 pontas */
         .stars-container {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: min(520px, 94vw);
-            height: 86px;
+            height: 90px;
             pointer-events: none;
             overflow: visible;
         }
@@ -162,7 +140,7 @@
         }
 
         /* ===================================================
-           BARRA EM PÍLULA LIQUID GLASS (PULSO LENTO E CADENCIADO)
+           BARRA EM PÍLULA LIQUID CLAY (COM VAI-E-VEM E AFUNDAR)
            =================================================== */
         .navbar-wrapper {
             position: fixed;
@@ -199,63 +177,71 @@
             border-radius: 9999px;
             background: linear-gradient(
                 145deg,
-                rgba(255, 255, 255, 0.14) 0%,
-                rgba(30, 41, 59, 0.68) 45%,
-                rgba(15, 23, 42, 0.82) 100%
+                rgba(255, 255, 255, 0.16) 0%,
+                rgba(30, 41, 59, 0.72) 45%,
+                rgba(15, 23, 42, 0.85) 100%
             );
-            border: 1px solid rgba(255, 255, 255, 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(22px) saturate(190%);
             -webkit-backdrop-filter: blur(22px) saturate(190%);
 
             box-shadow:
                 0 18px 38px -10px rgba(0, 0, 0, 0.65),
                 0 6px 18px -4px rgba(99, 102, 241, 0.28),
-                inset 0 2px 3px rgba(255, 255, 255, 0.65),
-                inset 0 -2px 5px rgba(0, 0, 0, 0.45);
+                inset 0 2px 4px rgba(255, 255, 255, 0.7),
+                inset 0 -3px 6px rgba(0, 0, 0, 0.5);
 
+            will-change: transform, width, padding, gap, box-shadow;
             transition:
-                width 650ms cubic-bezier(0.34, 1.2, 0.64, 1),
-                padding 650ms cubic-bezier(0.34, 1.2, 0.64, 1),
-                gap 650ms cubic-bezier(0.34, 1.2, 0.64, 1),
-                box-shadow 450ms ease;
+                width 700ms cubic-bezier(0.34, 1.45, 0.64, 1),
+                padding 700ms cubic-bezier(0.34, 1.45, 0.64, 1),
+                gap 700ms cubic-bezier(0.34, 1.45, 0.64, 1),
+                transform 650ms cubic-bezier(0.34, 1.5, 0.64, 1),
+                box-shadow 400ms ease;
         }
 
+        /* Vai um pouquinho para frente/cima e expande ao passar o mouse */
         .liquid-glass-pill:hover {
             width: 510px;
             padding: 12px 24px;
             gap: 16px;
+            transform: translateY(-4px) scale(1.03);
             box-shadow:
-                0 24px 48px -10px rgba(0, 0, 0, 0.72),
-                0 10px 26px -4px rgba(99, 102, 241, 0.42),
-                inset 0 2px 4px rgba(255, 255, 255, 0.8),
-                inset 0 -2px 6px rgba(0, 0, 0, 0.45);
+                0 26px 50px -10px rgba(0, 0, 0, 0.75),
+                0 12px 28px -4px rgba(99, 102, 241, 0.45),
+                inset 0 2px 5px rgba(255, 255, 255, 0.85),
+                inset 0 -3px 7px rgba(0, 0, 0, 0.5);
         }
 
-        /* ANIMAÇÃO DE PULSO DESACELERADA E RESPIRADA (5.5 SEGUNDOS) */
+        /* Diminui e afunda um pouquinho para baixo ao pressionar e depois volta */
+        .liquid-glass-pill:active {
+            transform: translateY(5px) scaleX(0.96) scaleY(0.9);
+            transition-duration: 220ms;
+        }
+
+        /* Ciclo lento e espaçado na inatividade: expande, avança de leve e volta */
         .liquid-glass-pill.idle-pulse {
-            animation: pulsar-inativo-suave 5500ms cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            animation: ciclo-liquid-clay-lento 4800ms cubic-bezier(0.34, 1.35, 0.64, 1) infinite;
         }
 
-        @keyframes pulsar-inativo-suave {
+        @keyframes ciclo-liquid-clay-lento {
             0%, 100% {
                 width: 440px;
                 padding: 10px 18px;
                 gap: 10px;
-                box-shadow:
-                    0 18px 38px -10px rgba(0, 0, 0, 0.65),
-                    0 6px 18px -4px rgba(99, 102, 241, 0.28),
-                    inset 0 2px 3px rgba(255, 255, 255, 0.65),
-                    inset 0 -2px 5px rgba(0, 0, 0, 0.45);
+                transform: translateY(0) scale(1);
             }
-            50% {
-                width: 495px;
-                padding: 11px 22px;
-                gap: 14px;
-                box-shadow:
-                    0 22px 44px -10px rgba(0, 0, 0, 0.7),
-                    0 8px 24px -4px rgba(99, 102, 241, 0.38),
-                    inset 0 2px 4px rgba(255, 255, 255, 0.75),
-                    inset 0 -2px 6px rgba(0, 0, 0, 0.45);
+            45% {
+                width: 500px;
+                padding: 12px 23px;
+                gap: 15px;
+                transform: translateY(-3px) scale(1.025);
+            }
+            72% {
+                width: 432px;
+                padding: 9px 17px;
+                gap: 9px;
+                transform: translateY(2px) scale(0.985);
             }
         }
 
@@ -332,11 +318,11 @@
         }
 
         /* ===================================================
-           DESTAQUE DO APLICATIVO PRINCIPAL
+           DESTAQUE DO APLICATIVO PRINCIPAL (FUNDO INTEGRADO)
            =================================================== */
         .hero {
             padding: 124px 20px 70px;
-            background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
+            background: #0f172a;
         }
 
         .featured-showcase {
@@ -752,20 +738,30 @@
                 max-width: 410px;
                 padding: 9px 12px;
                 gap: 8px;
+                transform: translateY(-3px) scale(1.02);
             }
 
-            @keyframes pulsar-inativo-suave {
+            @keyframes ciclo-liquid-clay-lento {
                 0%, 100% {
                     width: 96vw;
                     max-width: 390px;
                     padding: 8px 10px;
                     gap: 6px;
+                    transform: translateY(0) scale(1);
                 }
-                50% {
+                45% {
                     width: 98vw;
                     max-width: 410px;
                     padding: 9px 12px;
                     gap: 8px;
+                    transform: translateY(-2px) scale(1.02);
+                }
+                72% {
+                    width: 94vw;
+                    max-width: 375px;
+                    padding: 7px 9px;
+                    gap: 5px;
+                    transform: translateY(2px) scale(0.985);
                 }
             }
 
@@ -813,13 +809,13 @@
 </head>
 <body id="inicio">
 
-    <!-- TÍTULO SUPERIOR FUSÃO 100% SUAVE (SEM LINHAS RETAS) -->
+    <!-- TÍTULO SUPERIOR COM ESTRELAS DE 4 PONTAS ATRÁS -->
     <div class="top-brand-bar">
         <div class="stars-container" id="starsContainer"></div>
         <div class="brand-title" id="brandTitle">Aplicativos e Jogos</div>
     </div>
 
-    <!-- PÍLULA LIQUID GLASS (PULSO CADENCIADO EM LOOP DE 5.5s NA INATIVIDADE) -->
+    <!-- PÍLULA LIQUID CLAY (COM VAI-E-VEM, AFUNDAR E CICLO LENTO NA INATIVIDADE) -->
     <div class="navbar-wrapper" id="navbarWrapper">
         <nav class="liquid-glass-pill" id="liquidGlassPill" aria-label="Navegação principal">
             <button type="button" class="pill-nav-btn is-current" id="btnInicio">Início</button>
@@ -959,7 +955,7 @@
             }, 400);
         }, 4000);
 
-        // 3. PÍLULA LIQUID GLASS + ANIMAÇÃO PULSANTE EM LOOP SUAVE NA INATIVIDADE
+        // 3. PÍLULA LIQUID CLAY + CICLO LENTO NA INATIVIDADE
         const navbarWrapper = document.getElementById('navbarWrapper');
         const pill = document.getElementById('liquidGlassPill');
         const btnInicio = document.getElementById('btnInicio');
