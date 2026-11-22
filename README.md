@@ -40,10 +40,6 @@ Este site funciona como um **hub pessoal de distribuição direta** criado por *
 
 ---
 
-## 💡 Dica Rápida para o Repositório
-
-* Se você hospedar o site no **GitHub Pages**, lembre-se de trocar os links de exemplo (`https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/...`) pelas imagens reais do seu projeto para não cair na imagem de fallback.
-
 ---
 
 ## 🤖 Créditos
