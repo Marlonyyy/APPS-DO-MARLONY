@@ -140,7 +140,7 @@
         }
 
         /* ===================================================
-           BARRA LIQUID GLAZE + CÍRCULO GITHUB AO LADO (COM BOING)
+           BARRA LIQUID GLAZE + CÍRCULOS GITHUB E YOUTUBE
            =================================================== */
         .navbar-wrapper {
             position: fixed;
@@ -164,7 +164,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             max-width: 96vw;
             pointer-events: none;
         }
@@ -180,9 +180,9 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            width: 430px;
-            max-width: calc(95vw - 64px);
-            padding: 10px 18px;
+            width: 395px;
+            max-width: calc(95vw - 116px);
+            padding: 10px 16px;
 
             border-radius: 9999px;
             background: linear-gradient(
@@ -210,12 +210,11 @@
                 box-shadow 400ms ease;
         }
 
-        /* Boing ao expandir no hover */
         .liquid-glass-pill:hover {
-            width: 495px;
-            padding: 12px 24px;
-            gap: 16px;
-            transform: translateY(-4px) scale(1.035);
+            width: 445px;
+            padding: 11px 20px;
+            gap: 13px;
+            transform: translateY(-4px) scale(1.03);
             box-shadow:
                 0 26px 50px -10px rgba(0, 0, 0, 0.75),
                 0 12px 28px -4px rgba(99, 102, 241, 0.45),
@@ -223,47 +222,45 @@
                 inset 0 -3px 7px rgba(0, 0, 0, 0.5);
         }
 
-        /* Boing ao diminuir/afundar e voltar ao soltar */
         .liquid-glass-pill:active {
             transform: translateY(5px) scaleX(0.95) scaleY(0.89);
             transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Ciclo lento na inatividade com efeito "boing" ao expandir e ao diminuir */
         .liquid-glass-pill.idle-pulse {
             animation: boing-inativo-lento 5200ms cubic-bezier(0.22, 1.65, 0.36, 0.9) infinite;
         }
 
         @keyframes boing-inativo-lento {
             0%, 100% {
-                width: 430px;
-                padding: 10px 18px;
+                width: 395px;
+                padding: 10px 16px;
                 gap: 10px;
                 transform: translateY(0) scale(1);
             }
             38% {
-                width: 492px;
-                padding: 12px 23px;
-                gap: 15px;
-                transform: translateY(-4px) scale(1.035);
+                width: 442px;
+                padding: 11px 20px;
+                gap: 13px;
+                transform: translateY(-4px) scale(1.03);
             }
             54% {
-                width: 472px;
-                padding: 11px 21px;
-                gap: 13px;
-                transform: translateY(-1px) scale(1.012);
+                width: 424px;
+                padding: 11px 18px;
+                gap: 11px;
+                transform: translateY(-1px) scale(1.01);
             }
             74% {
-                width: 418px;
-                padding: 9px 16px;
+                width: 382px;
+                padding: 9px 15px;
                 gap: 8px;
                 transform: translateY(3px) scale(0.975);
             }
             86% {
-                width: 438px;
-                padding: 10px 18px;
+                width: 400px;
+                padding: 10px 16px;
                 gap: 10px;
-                transform: translateY(-1px) scale(1.008);
+                transform: translateY(-1px) scale(1.005);
             }
         }
 
@@ -281,17 +278,18 @@
             transition: background 120ms ease-out;
         }
 
-        /* CÍRCULO GITHUB COM MESMO ESTILO LIQUID GLAZE E BOING */
-        .github-circle-btn {
+        /* CÍRCULOS LIQUID GLAZE (GITHUB E YOUTUBE) — SEM EXPANDIR, COM LUZ GIRATÓRIA NA INATIVIDADE */
+        .social-circle-btn {
             --glow-x: 50%;
             --glow-y: 50%;
+            --orbit-angle: 0deg;
 
             pointer-events: auto;
             position: relative;
             overflow: hidden;
             flex-shrink: 0;
-            width: 52px;
-            height: 52px;
+            width: 50px;
+            height: 50px;
             border-radius: 9999px;
             display: flex;
             align-items: center;
@@ -315,64 +313,101 @@
                 inset 0 2px 4px rgba(255, 255, 255, 0.7),
                 inset 0 -3px 6px rgba(0, 0, 0, 0.5);
 
-            will-change: transform, box-shadow;
             transition:
-                transform 680ms cubic-bezier(0.22, 1.8, 0.36, 0.9),
+                transform 420ms cubic-bezier(0.22, 1.8, 0.36, 0.9),
                 box-shadow 350ms ease,
                 border-color 350ms ease;
         }
 
-        .github-circle-btn::before {
+        /* Brilho interno normal */
+        .social-circle-btn::before {
             content: "";
             position: absolute;
             inset: 0;
             background: radial-gradient(
-                90px circle at var(--glow-x) var(--glow-y),
+                85px circle at var(--glow-x) var(--glow-y),
                 rgba(255, 255, 255, 0.38) 0%,
                 rgba(165, 180, 252, 0.16) 45%,
                 transparent 80%
             );
             pointer-events: none;
-        }
-
-        .github-circle-btn svg {
-            position: relative;
             z-index: 1;
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
-            transition: transform 550ms cubic-bezier(0.22, 1.8, 0.36, 0.9);
         }
 
-        .github-circle-btn:hover {
-            transform: translateY(-4px) scale(1.1);
+        /* Luz circulante em volta do círculo quando o usuário fica inativo */
+        .social-circle-btn::after {
+            content: "";
+            position: absolute;
+            inset: -3px;
+            border-radius: 9999px;
+            padding: 3px;
+            background: conic-gradient(
+                from var(--orbit-angle, 0deg),
+                transparent 0deg,
+                rgba(129, 140, 248, 0.15) 60deg,
+                rgba(255, 255, 255, 0.95) 115deg,
+                rgba(56, 189, 248, 0.85) 155deg,
+                transparent 215deg,
+                transparent 360deg
+            );
+            -webkit-mask:
+                linear-gradient(#000 0 0) content-box,
+                linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 2;
+            transition: opacity 450ms ease;
+        }
+
+        .social-circle-btn.idle-orbit::after {
+            opacity: 1;
+        }
+
+        .social-circle-btn svg {
+            position: relative;
+            z-index: 3;
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+            transition: transform 420ms cubic-bezier(0.22, 1.8, 0.36, 0.9);
+        }
+
+        .social-circle-btn.youtube-btn svg {
+            color: #ff4e50;
+            filter: drop-shadow(0 0 6px rgba(255, 78, 80, 0.45));
+        }
+
+        .social-circle-btn:hover {
+            transform: translateY(-3px) scale(1.06);
             border-color: rgba(255, 255, 255, 0.48);
             box-shadow:
-                0 24px 44px -10px rgba(0, 0, 0, 0.75),
+                0 22px 42px -10px rgba(0, 0, 0, 0.75),
                 0 10px 24px -4px rgba(99, 102, 241, 0.45),
                 inset 0 2px 5px rgba(255, 255, 255, 0.85),
                 inset 0 -3px 7px rgba(0, 0, 0, 0.5);
         }
 
-        .github-circle-btn:hover svg {
-            transform: scale(1.08) rotate(-6deg);
+        .social-circle-btn:hover svg {
+            transform: scale(1.08);
         }
 
-        .github-circle-btn:active {
-            transform: translateY(4px) scale(0.88);
-            transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1);
+        .social-circle-btn:active {
+            transform: translateY(3px) scale(0.92);
+            transition: transform 160ms cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .pill-nav-btn {
             position: relative;
             z-index: 1;
             flex: 1;
-            padding: 10px 14px;
+            padding: 10px 12px;
             border-radius: 9999px;
             border: 1px solid rgba(255, 255, 255, 0.22);
             background: rgba(255, 255, 255, 0.08);
             color: #e2e8f0;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 700;
             letter-spacing: 0.2px;
             cursor: pointer;
@@ -832,75 +867,75 @@
             }
 
             .nav-cluster {
-                gap: 8px;
+                gap: 6px;
             }
 
             .liquid-glass-pill {
-                width: calc(95vw - 56px);
-                max-width: 330px;
-                padding: 8px 10px;
-                gap: 5px;
+                width: calc(95vw - 92px);
+                max-width: 280px;
+                padding: 7px 8px;
+                gap: 4px;
             }
 
             .liquid-glass-pill:hover {
-                width: calc(97vw - 56px);
-                max-width: 350px;
-                padding: 9px 12px;
-                gap: 7px;
+                width: calc(96vw - 92px);
+                max-width: 295px;
+                padding: 8px 10px;
+                gap: 6px;
                 transform: translateY(-3px) scale(1.02);
             }
 
             @keyframes boing-inativo-lento {
                 0%, 100% {
-                    width: calc(95vw - 56px);
-                    max-width: 330px;
-                    padding: 8px 10px;
-                    gap: 5px;
+                    width: calc(95vw - 92px);
+                    max-width: 280px;
+                    padding: 7px 8px;
+                    gap: 4px;
                     transform: translateY(0) scale(1);
                 }
                 38% {
-                    width: calc(97vw - 56px);
-                    max-width: 350px;
-                    padding: 9px 12px;
-                    gap: 7px;
-                    transform: translateY(-3px) scale(1.025);
+                    width: calc(96vw - 92px);
+                    max-width: 295px;
+                    padding: 8px 10px;
+                    gap: 6px;
+                    transform: translateY(-3px) scale(1.02);
                 }
                 54% {
-                    width: calc(96vw - 56px);
-                    max-width: 340px;
-                    padding: 8px 11px;
-                    gap: 6px;
+                    width: calc(95.5vw - 92px);
+                    max-width: 288px;
+                    padding: 7px 9px;
+                    gap: 5px;
                     transform: translateY(-1px) scale(1.01);
                 }
                 74% {
-                    width: calc(93vw - 56px);
-                    max-width: 318px;
-                    padding: 7px 9px;
-                    gap: 4px;
+                    width: calc(93vw - 92px);
+                    max-width: 270px;
+                    padding: 6px 7px;
+                    gap: 3px;
                     transform: translateY(2px) scale(0.98);
                 }
                 86% {
-                    width: calc(95vw - 56px);
-                    max-width: 330px;
-                    padding: 8px 10px;
-                    gap: 5px;
+                    width: calc(95vw - 92px);
+                    max-width: 280px;
+                    padding: 7px 8px;
+                    gap: 4px;
                     transform: translateY(-1px) scale(1.005);
                 }
             }
 
-            .github-circle-btn {
-                width: 44px;
-                height: 44px;
+            .social-circle-btn {
+                width: 40px;
+                height: 40px;
             }
 
-            .github-circle-btn svg {
-                width: 20px;
-                height: 20px;
+            .social-circle-btn svg {
+                width: 18px;
+                height: 18px;
             }
 
             .pill-nav-btn {
-                padding: 8px 7px;
-                font-size: 0.74rem;
+                padding: 7px 5px;
+                font-size: 0.7rem;
             }
 
             .hero {
@@ -948,7 +983,7 @@
         <div class="brand-title" id="brandTitle">Aplicativos e Jogos</div>
     </div>
 
-    <!-- PÍLULA LIQUID GLAZE + CÍRCULO GITHUB AO LADO -->
+    <!-- PÍLULA LIQUID GLAZE + CÍRCULO GITHUB + CÍRCULO YOUTUBE -->
     <div class="navbar-wrapper" id="navbarWrapper">
         <div class="nav-cluster">
             <nav class="liquid-glass-pill" id="liquidGlassPill" aria-label="Navegação principal">
@@ -957,18 +992,33 @@
                 <button type="button" class="pill-nav-btn btn-green" id="btnAtualizacoes">Atualizações</button>
             </nav>
 
-            <!-- TROQUE O LINK ABAIXO PELO LINK DO SEU GITHUB -->
+            <!-- COLOQUE O LINK DO SEU GITHUB ABAIXO -->
             <a
                 href="https://github.com/seu-usuario/seu-repositorio"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="github-circle-btn"
+                class="social-circle-btn"
                 id="githubCircleBtn"
                 aria-label="Abrir página no GitHub"
                 title="GitHub"
             >
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+            </a>
+
+            <!-- COLOQUE O LINK DO SEU CANAL DO YOUTUBE ABAIXO -->
+            <a
+                href="https://www.youtube.com/@seu-canal"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-circle-btn youtube-btn"
+                id="youtubeCircleBtn"
+                aria-label="Abrir canal no YouTube"
+                title="YouTube"
+            >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                 </svg>
             </a>
         </div>
@@ -1105,10 +1155,13 @@
             }, 400);
         }, 4000);
 
-        // 3. PÍLULA LIQUID GLAZE + CÍRCULO GITHUB + BOING NA INATIVIDADE
+        // 3. PÍLULA LIQUID GLAZE + CÍRCULOS GITHUB & YOUTUBE + LUZ GIRATÓRIA NA INATIVIDADE
         const navbarWrapper = document.getElementById('navbarWrapper');
         const pill = document.getElementById('liquidGlassPill');
-        const githubCircleBtn = document.getElementById('githubCircleBtn');
+        const socialCircles = [
+            document.getElementById('githubCircleBtn'),
+            document.getElementById('youtubeCircleBtn')
+        ];
         const btnInicio = document.getElementById('btnInicio');
         const btnApps = document.getElementById('btnApps');
         const btnAtualizacoes = document.getElementById('btnAtualizacoes');
@@ -1117,6 +1170,7 @@
         let tempoInativoTimer = null;
         let brilhoInativoTimer = null;
         let glowAngulo = 0;
+        let orbitGraus = 0;
 
         function atualizarBrilhoPorScroll() {
             const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
@@ -1126,32 +1180,46 @@
 
             pill.style.setProperty('--glow-x', `${glowX}%`);
             pill.style.setProperty('--glow-y', `${glowY}%`);
-            githubCircleBtn.style.setProperty('--glow-x', `${glowX}%`);
-            githubCircleBtn.style.setProperty('--glow-y', `${glowY}%`);
+
+            socialCircles.forEach(circle => {
+                circle.style.setProperty('--glow-x', `${glowX}%`);
+                circle.style.setProperty('--glow-y', `${glowY}%`);
+            });
 
             navbarWrapper.classList.toggle('scrolled', window.scrollY > 24);
         }
 
         function resetarInatividade() {
             pill.classList.remove('idle-pulse');
+            socialCircles.forEach(circle => circle.classList.remove('idle-orbit'));
+
             clearInterval(brilhoInativoTimer);
             brilhoInativoTimer = null;
 
             clearTimeout(tempoInativoTimer);
-            tempoInativoTimer = setTimeout(iniciarPulsoInatividade, 5000);
+            tempoInativoTimer = setTimeout(iniciarAnimacaoInatividade, 5000);
         }
 
-        function iniciarPulsoInatividade() {
+        function iniciarAnimacaoInatividade() {
             pill.classList.add('idle-pulse');
+            socialCircles.forEach(circle => circle.classList.add('idle-orbit'));
 
             if (!brilhoInativoTimer) {
                 brilhoInativoTimer = setInterval(() => {
-                    glowAngulo += 0.02;
+                    glowAngulo += 0.025;
+                    orbitGraus = (orbitGraus + 3.2) % 360;
+
                     const x = 50 + Math.cos(glowAngulo) * 35;
                     const y = 50 + Math.sin(glowAngulo) * 30;
                     pill.style.setProperty('--glow-x', `${x}%`);
                     pill.style.setProperty('--glow-y', `${y}%`);
-                }, 40);
+
+                    socialCircles.forEach(circle => {
+                        circle.style.setProperty('--orbit-angle', `${orbitGraus}deg`);
+                        circle.style.setProperty('--glow-x', `${50 + Math.cos(glowAngulo) * 38}%`);
+                        circle.style.setProperty('--glow-y', `${50 + Math.sin(glowAngulo) * 38}%`);
+                    });
+                }, 35);
             }
         }
 
@@ -1167,16 +1235,19 @@
             pill.style.setProperty('--glow-y', `${y}%`);
         });
 
-        githubCircleBtn.addEventListener('pointermove', (e) => {
-            const rect = githubCircleBtn.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-            githubCircleBtn.style.setProperty('--glow-x', `${x}%`);
-            githubCircleBtn.style.setProperty('--glow-y', `${y}%`);
+        socialCircles.forEach(circle => {
+            circle.addEventListener('pointermove', (e) => {
+                const rect = circle.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                circle.style.setProperty('--glow-x', `${x}%`);
+                circle.style.setProperty('--glow-y', `${y}%`);
+            });
+
+            circle.addEventListener('pointerleave', atualizarBrilhoPorScroll);
         });
 
         pill.addEventListener('pointerleave', atualizarBrilhoPorScroll);
-        githubCircleBtn.addEventListener('pointerleave', atualizarBrilhoPorScroll);
         window.addEventListener('scroll', atualizarBrilhoPorScroll, { passive: true });
         atualizarBrilhoPorScroll();
         resetarInatividade();
